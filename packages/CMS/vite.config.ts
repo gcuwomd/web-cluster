@@ -1,20 +1,29 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
-
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import { presetUno, presetIcons, presetAttributify, transformerAttributifyJsx } from 'unocss'
+import unocss from 'unocss/vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
-    AutoImport({
-      imports: ["vue", "vue-router"],
-      dts: "./src/auto-import.d.ts",
-    }),
-    Components({
-      dirs: ["src/components"],
-      dts: "src/components.d.ts",
-      resolvers: [],
-    }),
-  ],
-});
+    react(),
+    unocss({
+      presets: [presetUno(), presetIcons(), presetAttributify()],
+      transformers: [transformerAttributifyJsx()],
+      theme: {
+        extend: {
+          screens: {
+            md: '768px',
+            lg: '976px',
+            xl: '1280px',
+          },
+          flexGrow:{
+            2: '2'
+          }
+        },
+        color: {
+          bg: '#f2f3f5'
+        }
+      },
+    })
+  ]
+})
