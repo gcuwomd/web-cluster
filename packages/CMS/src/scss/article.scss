@@ -1,0 +1,25 @@
+article {
+  font-family: 'Maple Mono SC NF' !important;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  line-height: 2rem;
+  pre {
+    background-color: #272822;
+    div {
+      margin: 0 !important;
+    }
+  }
+  code {
+    font-family: 'Maple Mono SC NF' !important;
+    background-color: #afb8c133;
+    padding: 0.2em 0.4em;
+    border-radius: 6px;
+  }
+  ul {
+    list-style-position: inside;
+    li {
+      margin: 6px 0;
+    }
+  }
+}

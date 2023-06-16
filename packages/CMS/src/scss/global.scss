@@ -1,9 +1,15 @@
-*{
+@font-face {
+  font-family: 'Maple Mono SC NF';
+  src: url('../assets/fonts/MapleMono-SC-NF-Regular.ttf');
+}
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 #root {
   min-height: 100vh;
   background-color: #f2f3f5;
 }
+
