@@ -1,6 +1,8 @@
-import { Avatar } from "antd"
-import reactIcon from "../../assets/react.svg"
+import { Avatar } from 'antd'
+import reactIcon from '../assets/react.svg'
+import { useNavigate } from 'react-router-dom'
 const Header = () => {
+  const nav = useNavigate()
   return (
     <>
       <div className="w-screen px-8 py-4 bg-white fixed top-0 left-0 right-0 z-99">
@@ -9,7 +11,14 @@ const Header = () => {
           <div className="flex items-center">
             <ul className="list-none mr-8 flex flex-row gap-x-4">
               <li className="cursor-pointer">广场</li>
-              <li>我的文章</li>
+              <li
+                className="cursor-pointer"
+                onClick={() => {
+                  nav('/profile/123')
+                }}
+              >
+                我的主页
+              </li>
             </ul>
             <div>
               <Avatar src={reactIcon} />
