@@ -17,12 +17,11 @@ export default defineConfig({
             xl: '1280px',
           },
           flexGrow:{
-            2: '2'
+            2: '2',
+            3: '3',
+            4: '4'
           }
         },
-        color: {
-          bg: '#f2f3f5'
-        }
       },
     })
   ]

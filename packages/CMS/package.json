@@ -11,13 +11,20 @@
   },
   "dependencies": {
     "antd": "^5.6.0",
+    "cherry-markdown": "^0.8.20",
+    "dayjs": "^1.11.8",
+    "rc-virtual-list": "^3.5.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.7",
+    "react-router-dom": "^6.12.1",
+    "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.75",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
+    "@types/react-syntax-highlighter": "^15.5.7",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "@vitejs/plugin-react-swc": "^3.0.0",
