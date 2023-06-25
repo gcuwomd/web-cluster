@@ -8,7 +8,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 function App() {
   const nav = useNavigate()
   const location = useLocation()
-  console.log("render app");
   
   return (
     <>

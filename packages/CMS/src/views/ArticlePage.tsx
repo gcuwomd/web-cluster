@@ -1,12 +1,13 @@
 import { Card } from 'antd'
 import '../scss/article.scss'
-import ReactMarkdown from 'react-markdown'
-import { Prism } from 'react-syntax-highlighter'
 import { okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import Toc from '../components/sider/Toc'
-
+import { Suspense, lazy } from 'react'
+const ReactMarkdown = lazy(() => import('react-markdown'))
+const Prism = lazy(() => import('react-syntax-highlighter/dist/esm/prism'))
+const Toc = lazy(() => import('../components/sider/Toc'))
 // @ts-ignore
-const article = `# this
+const article = `
+# this
 
 - this 用于访问当前方法的所属对象
 
@@ -169,39 +170,39 @@ console.log(xiaopeng)
 `
 
 const ArticlePage = () => {
-
   return (
     <>
-      <div className="max-w-192 mt-5 mb-20">
-        <Card>
-          <article id='article'>
-            <ReactMarkdown
-              children={article}
-              components={{
-                code({ node, inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || '')
-                  return !inline && match ? (
-                    <Prism
-                      {...props}
-                      children={String(children).replace(/\n$/, '')}
-                      style={okaidia}
-                      language={match[1]}
-                      PreTag="div"
-                      showLineNumbers
-                    />
-                  ) : (
-                    <code className={className}>{children}</code>
-                  )
-                }
-              }}
-              
-            ></ReactMarkdown>
-          </article>
-        </Card>
-      </div>
-      <div className='w-48'>
-        <Toc />
-      </div>
+      <Suspense>
+        <div className="max-w-192 mt-5 mb-20">
+          <Card>
+            <article id="article">
+              <ReactMarkdown
+                children={article}
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || '')
+                    return !inline && match ? (
+                      <Prism
+                        {...props}
+                        children={String(children).replace(/\n$/, '')}
+                        style={okaidia}
+                        language={match[1]}
+                        PreTag="div"
+                        showLineNumbers
+                      />
+                    ) : (
+                      <code className={className}>{children}</code>
+                    )
+                  }
+                }}
+              />
+            </article>
+          </Card>
+        </div>
+        <div className="w-48">
+          <Toc />
+        </div>
+      </Suspense>
     </>
   )
 }
