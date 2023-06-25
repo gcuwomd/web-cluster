@@ -4,6 +4,7 @@ const Profile = lazy(() => import('../views/ProfilePage'))
 const HomePage = lazy(() => import('../views/HomePage'))
 const ArticlePage = lazy(() => import('../views/ArticlePage'))
 const WritingPage = lazy(() => import('../views/WritingPage'))
+const SettingsPage = lazy(() => import('../views/SettingsPage'))
 const Main = () => {
   console.log("render main");
   
@@ -17,6 +18,10 @@ const Main = () => {
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/post/:articleId" element={<ArticlePage />} />
             <Route path='/writing' element={<WritingPage />} />
+            <Route path='/settings' element={<SettingsPage />}>
+              <Route path='basic' />
+              <Route path='tags' />
+            </Route>
           </Routes>
         </div>
       </div>

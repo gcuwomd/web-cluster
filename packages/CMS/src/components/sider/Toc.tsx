@@ -1,9 +1,9 @@
 import { Card, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 
-// type TocProps = {
-//   article: HTMLElement
-// }
+type TocProps = {
+  // loaded: boolean
+}
 type Catalog = {
   content: string
   anchor: number
@@ -33,14 +33,14 @@ function findIndex(arr: number[], n: number) {
 //     return [index - 1, index]
 //   }
 // }
-const Toc = () => {
+const Toc = ({}: TocProps) => {
   const [catalogList, setCatalogList] = useState<Catalog[]>([])
   const [anchorList, setAnchorList] = useState<number[]>([])
   const [currentHeading, setCurrentHeading] = useState(0)
   useEffect(() => {
-    const headings: NodeListOf<HTMLHeadingElement> = document
-      .querySelector('article')!
-      .querySelectorAll('h1,h2,h3,h4,h5,h6')
+    const headings: NodeListOf<HTMLHeadingElement> | undefined = document
+      .querySelector('article')
+      ?.querySelectorAll('h1,h2,h3,h4,h5,h6')
     let catalogs: Catalog[] = []
     let anchors: number[] = []
     headings?.forEach((heading: HTMLHeadingElement) => {
@@ -65,7 +65,6 @@ const Toc = () => {
     setCatalogList(catalogs)
     setAnchorList(anchors)
   }, [])
-  // const headings = article.querySelectorAll('h1, h2, h3, h4, h5, h6')
   const handleClick = (index: number) => {
     window.scrollTo({
       top: catalogList[index].anchor

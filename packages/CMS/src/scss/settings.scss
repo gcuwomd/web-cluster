@@ -1,0 +1,17 @@
+.ant-upload-select {
+  border: none!important;
+  background-color: transparent!important;
+}
+
+.setting-menu > li{
+  padding-left: 0!important;
+}
+
+.setting-tag {
+  .ant-switch-checked {
+    background-color: #ff4d4f;
+  }
+  .ant-switch-checked:hover{
+    background-color: #ff7875!important;
+  }
+}
