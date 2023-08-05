@@ -23,6 +23,7 @@
     "prettier": "^2.8.7",
     "typescript": "*",
     "iaac": "workspace:*",
-    "cms": "workspace:*"
+    "cms": "workspace:*",
+    "website-portal": "workspace:*"
   }
 }
