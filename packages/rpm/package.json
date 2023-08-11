@@ -9,13 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "alova": "^2.9.3",
+    "alova": "^2.10.0",
     "element-plus": "^2.3.9",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.75",
+    "@iconify/json": "^2.2.100",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "eslint": "^8.0.1",
@@ -24,9 +24,10 @@
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^9.16.1",
-    "sass": "^1.59.2",
+    "prettier": "^3.0.1",
+    "sass": "^1.65.1",
     "typescript": "^5.1.6",
-    "unocss": "^0.53.1",
+    "unocss": "^0.53.6",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.5",
