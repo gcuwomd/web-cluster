@@ -6,7 +6,7 @@
         <div class="i-material-symbols:analytics-outline text-2xl mr-2"></div>
         <span> 总览 </span>
       </el-menu-item>
-      <el-menu-item index="/website">
+      <el-menu-item index="/website/list">
         <div class="i-mingcute:web-line text-2xl mr-2"></div>
         <span>站点管理</span>
       </el-menu-item>

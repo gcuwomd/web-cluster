@@ -13,7 +13,7 @@
           <Sider />
         </el-aside>
         <el-container>
-          <el-main class="bg-[#f2f3f5]">
+          <el-main>
             <Main />
           </el-main>
           <el-footer>
