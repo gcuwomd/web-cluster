@@ -24,6 +24,7 @@
     "typescript": "*",
     "rpm": "workspace:*",
     "cms": "workspace:*",
-    "website-portal": "workspace:*"
+    "website-portal": "workspace:*",
+    "enrollment-platform": "workspace:*"
   }
 }
