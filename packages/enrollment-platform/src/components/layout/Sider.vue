@@ -2,25 +2,15 @@
 <template>
   <div class="h-full">
     <el-menu class="h-full" :router="true" default-active="/">
-      <el-menu-item index="/">
-        <div class="i-material-symbols:analytics-outline text-2xl mr-2"></div>
-        <span> 总览 </span>
-      </el-menu-item>
-      <el-menu-item index="/website/list">
-        <div class="i-mingcute:web-line text-2xl mr-2"></div>
-        <span>站点管理</span>
-      </el-menu-item>
-      <el-menu-item index="/organization">
-        <div class="i-charm:organisation text-2xl mr-2"></div>
-        <span>组织架构</span>
-      </el-menu-item>
-      <el-menu-item index="/role">
-        <div class="i-majesticons:scan-user-line text-2xl mr-2"></div>
-        <span>角色管理</span>
-      </el-menu-item>
-      <el-menu-item index="/members">
-        <div class="i-majesticons:users-line text-2xl mr-2"></div>
-        <span>成员管理</span>
+      <el-sub-menu index="/">
+        <template #title>
+          <span>数据统计</span>
+        </template>
+        <el-menu-item index="1-1">饼状图</el-menu-item>
+            <el-menu-item index="1-2">直方图</el-menu-item>
+      </el-sub-menu>
+      <el-menu-item index="1-1">报名信息
+        
       </el-menu-item>
     </el-menu>
   </div>

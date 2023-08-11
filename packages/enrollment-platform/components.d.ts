@@ -17,6 +17,7 @@ declare module 'vue' {
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElText: typeof import('element-plus/es')['ElText']
     Footer: typeof import('./src/components/layout/Footer.vue')['default']
     Header: typeof import('./src/components/layout/Header.vue')['default']
