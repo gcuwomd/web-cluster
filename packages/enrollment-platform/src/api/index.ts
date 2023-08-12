@@ -3,11 +3,11 @@ import { setInterceptors } from './interceptors' // 拦截器
 
 // Axios 配置
 const config={
-    baseURL: "43.139.117.216:8100",
+    baseURL: "http://43.139.117.216:8100",
     timeout:1000*60*60, // 超时
     headers: {
         "Content-Type": "application/json",
-        // "X-Auth-Token":"token"
+        "X-Auth-Token":"token"
     }
 }
 
