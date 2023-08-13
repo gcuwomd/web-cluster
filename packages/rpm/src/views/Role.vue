@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" stripe style="width: 100%" >
+  <el-table :data="tableData" stripe style="width: 100%">
     <el-table-column type="expand">
       <template #default="props">
         <div m="4" class="expanded">
@@ -16,10 +16,9 @@
             <el-table-column label="Zip" prop="zip" />
           </el-table> -->
         </div>
-       
       </template>
     </el-table-column>
-    <el-table-column  class="custom-column1" label="Date" prop="date" />
+    <el-table-column class="custom-column1" label="Date" prop="date" />
     <el-table-column class="custom-column2" label="Name" prop="name" />
   </el-table>
 </template>
@@ -29,62 +28,70 @@
 
 const tableData = [
   {
-    date: "2016-05-03",
-    name: "Tom",
-    state: "California",
-    city: "San Francisco",
-    address: "3650 21st St, San Francisco",
-    zip: "CA 94114",
+    date: '2016-05-03',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114'
   },
   {
-    date: "2016-05-02",
-    name: "Tom",
-    state: "California",
-    city: "San Francisco",
-    address: "3650 21st St, San Francisco",
-    zip: "CA 94114",
+    date: '2016-05-02',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114'
   },
   {
-    date: "2016-05-04",
-    name: "Tom",
-    state: "California",
-    city: "San Francisco",
-    address: "3650 21st St, San Francisco",
-    zip: "CA 94114",
+    date: '2016-05-04',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114'
   },
   {
-    date: "2016-05-01",
-    name: "Tom",
-    state: "California",
-    city: "San Francisco",
-    address: "3650 21st St, San Francisco",
-    zip: "CA 94114",
+    date: '2016-05-01',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114'
   },
   {
-    date: "2016-05-08",
-    name: "Tom",
-    state: "California",
-    city: "San Francisco",
-    address: "3650 21st St, San Francisco",
-    zip: "CA 94114",
+    date: '2016-05-08',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114'
   },
   {
-    date: "2016-05-06",
-    name: "Tom",
-    state: "California",
-    city: "San Francisco",
-    address: "3650 21st St, San Francisco",
-    zip: "CA 94114",
+    date: '2016-05-06',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114'
   },
   {
-    date: "2016-05-07",
-    name: "Tom",
-    state: "California",
-    city: "San Francisco",
-    address: "3650 21st St, San Francisco",
-    zip: "CA 94114",
+    date: '2016-05-07',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114'
   },
-];
+  {
+    date: '2016-05-07',
+    name: 'Tom',
+    state: 'California',
+    city: 'San Francisco',
+    address: '3650 21st St, San Francisco',
+    zip: 'CA 94114'
+  }
+]
 </script>
 <style scoped lang="scss">
 .expanded {
@@ -104,5 +111,4 @@ const tableData = [
     font-size: 18px; /* 设置表头文字大小 */
   }
 }
-
 </style>
