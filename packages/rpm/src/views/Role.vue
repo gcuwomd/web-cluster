@@ -1,105 +1,164 @@
-<template>
-  <el-table :data="tableData" stripe style="width: 100%">
-    <el-table-column type="expand">
-      <template #default="props">
-        <div m="4" class="expanded">
-          <p m="t-0 b-2">State: {{ props.row.state }}</p>
-          <p m="t-0 b-2">City: {{ props.row.city }}</p>
-          <p m="t-0 b-2">Address: {{ props.row.address }}</p>
-          <p m="t-0 b-2">Zip: {{ props.row.zip }}</p>
-          <!-- <h3>Family</h3>
-          <el-table :data="props.row.family">
-            <el-table-column label="Name" prop="name" />
-            <el-table-column label="State" prop="state" />
-            <el-table-column label="City" prop="city" />
-            <el-table-column label="Address" prop="address" />
-            <el-table-column label="Zip" prop="zip" />
-          </el-table> -->
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column class="custom-column1" label="Date" prop="date" />
-    <el-table-column class="custom-column2" label="Name" prop="name" />
-  </el-table>
-</template>
-
 <script lang="ts" setup>
-/* import { ref } from "vue"; */
+import { ref, onMounted } from 'vue'
+import { rolelist } from '../api/Role-manage/role-list'
+const pageSize = ref(10)
+const currentPage = ref(1)
 
-const tableData = [
+interface Role {
+  date: string
+  name: string
+  state: string
+  city: string
+  address: string
+  zip: string
+}
+const total = ref(100)
+
+//加载出卡片
+const roleData: Role[] = [
   {
-    date: '2016-05-03',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114'
+    date: '1',
+    name: '1',
+    state: '1',
+    city: '1',
+    address: '1',
+    zip: '1'
+  },
+
+  {
+    date: '1',
+    name: '1',
+    state: '1',
+    city: '1',
+    address: '1',
+    zip: '1'
   },
   {
-    date: '2016-05-02',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114'
+    date: '1',
+    name: '1',
+    state: '1',
+    city: '1',
+    address: '1',
+    zip: '1'
   },
   {
-    date: '2016-05-04',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114'
+    date: '1',
+    name: '1',
+    state: '1',
+    city: '1',
+    address: '1',
+    zip: '1'
   },
   {
-    date: '2016-05-01',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114'
+    date: '1',
+    name: '1',
+    state: '1',
+    city: '1',
+    address: '1',
+    zip: '1'
   },
   {
-    date: '2016-05-08',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114'
+    date: '1',
+    name: '1',
+    state: '1',
+    city: '1',
+    address: '1',
+    zip: '1'
   },
   {
-    date: '2016-05-06',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114'
+    date: '1',
+    name: '1',
+    state: '1',
+    city: '1',
+    address: '1',
+    zip: '1'
   },
   {
-    date: '2016-05-07',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114'
+    date: '1',
+    name: '1',
+    state: '1',
+    city: '1',
+    address: '1',
+    zip: '1'
   },
   {
-    date: '2016-05-07',
-    name: 'Tom',
-    state: 'California',
-    city: 'San Francisco',
-    address: '3650 21st St, San Francisco',
-    zip: 'CA 94114'
+    date: '1',
+    name: '1',
+    state: '1',
+    city: '1',
+    address: '1',
+    zip: '1'
+  },
+  {
+    date: '1',
+    name: '1',
+    state: '1',
+    city: '1',
+    address: '1',
+    zip: '1'
   }
 ]
-</script>
-<style scoped lang="scss">
-.expanded {
-  margin-left: 60px;
-  font-size: 15px;
-  line-height: 30px;
+onMounted(async () => {
+  let data = (await rolelist()).data
+  roleData.values = data
+  total.value = data.length
+})
+//更新页数
+const handleSizeChange = (val: number) => {
+  console.log(`${val} items per page`)
 }
+const handleCurrentChange = (val: number) => {
+  console.log(`current page: ${val}`)
+}
+</script>
 
+<template>
+  <el-row :gutter="40">
+    <el-col v-for="(role, index) in roleData" :key="index" :span="12">
+      <el-card style="margin-top: 20px">
+        <template #header>
+          <div class="card-header">
+            <span>{{ role.name }}</span>
+            <el-button class="button" text>Operation button</el-button>
+          </div>
+        </template>
+        <div class="cards">
+          <p>{{ role.date }}</p>
+          <p>{{ role.state }}</p>
+          <p>{{ role.city }}</p>
+          <p>{{ role.address }}</p>
+          <p>{{ role.zip }}</p>
+        </div>
+      </el-card>
+    </el-col>
+  </el-row>
+  <el-pagination
+    :current-page="currentPage"
+    :page-size="pageSize"
+    :page-sizes="[10, 20, 30, 40]"
+    layout="total, sizes, prev, pager, next"
+    :total="total"
+    :small="false"
+    :background="false"
+    :disabled="false"
+    @size-change="handleSizeChange"
+    @current-change="handleCurrentChange"
+  />
+</template>
+
+<style scoped lang="scss">
+.cards {
+  margin-left: 30px;
+  font-size: 18px;
+  line-height: 25px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 30px;
+  font-size: 18px;
+}
 .custom-column1 {
   &.cell, // 使用&符号代表父元素
   &.custom-column2.cell {

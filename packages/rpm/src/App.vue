@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Role from './views/Role.vue'
+</script>
 <template>
   <div class="h-screen">
     <el-container class="h-full">
@@ -11,7 +13,8 @@
         </el-aside>
         <el-container>
           <el-main>
-            <Main />
+            <!-- <Main /> -->
+            <Role></Role>
           </el-main>
           <el-footer>
             <Footer />
