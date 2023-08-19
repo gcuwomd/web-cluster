@@ -3,7 +3,7 @@ export const willpass =()=>{
     return BaseAxios.get("/user/willPass",{
         headers:{},
         params:{
-            organizationId:1
+            departmentId:1
         }
     })
 }

@@ -36,17 +36,48 @@ const handleEdit = (index: number, row: any) => {
 const handleDel = (index: number, row: any) => {
   console.log(index, row);
 };
+
+const options = [
+  {
+    value: '1',
+    label: '通过',
+  },
+  {
+    value: '2',
+    label: '未通过',
+  },
+  {
+    value: '3',
+    label: '待审核',
+  },]
 </script>
 <template>
   <div class="container">
     <div style="margin-top: 10px">
       <el-table :data="tableData" style="width: 100%">
+        <el-table-column type="selection" />
+        <el-table-column label="Order">
+          <template #default="scope">
+          <span>{{ scope.$index + 1 }}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="check">
+          <template #default="scope">
+          <el-select v-model="scope.row.value" clearable placeholder="Select" >
+            <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+        </template>
+        </el-table-column>
         <el-table-column prop="college" label="College" />
-        <el-table-column prop="volunteer" label="Volunteer" width="150" />
-        <el-table-column prop="gender" label="Gender" width="80" />
+        <el-table-column prop="volunteer" label="Volunteer" width="120"/>
+        <el-table-column prop="gender" label="Gender" />
         <el-table-column prop="major" label="Major" />
-        <el-table-column prop="id" label="Id" width="120" />
-        <el-table-column prop="introduction" label="Introduction">
+        <el-table-column prop="introduction" label="Introduction" width="120">
           <template #default="scope">
             <el-tooltip :content="scope.row.introduction" raw-content placement="top-start" v-if="scope.row.introduction">
               <span v-if="scope.row.introduction && scope.row.introduction.length <= 10">
@@ -60,7 +91,7 @@ const handleDel = (index: number, row: any) => {
           </template>
         </el-table-column>
         <el-table-column prop="username" label="Name" width="80" />
-        <el-table-column label="Operations">
+        <el-table-column label="Operations" width="180">
           <template #default="scope">
             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
             <el-button size="small" type="danger" @click="handleDel(scope.$index, scope.row)">Delete</el-button>
