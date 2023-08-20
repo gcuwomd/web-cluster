@@ -3,7 +3,7 @@ import { setInterceptors } from './interceptors' // 拦截器
 
 // Axios 配置
 const config={
-    baseURL: "http://rfkpaa.natappfree.cc",
+    baseURL: "http://43.139.117.216:8100",
     timeout:1000*60*60, // 超时
     headers: {
         "Content-Type": "application/json",
