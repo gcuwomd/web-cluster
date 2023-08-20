@@ -15,22 +15,26 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path:'/sign',
-    component: ()=>import('../views/Sign.vue')
+    path: '/sign',
+    component: () => import('../views/Sign.vue')
   },
   {
-    path:'/pass',
-    component:()=>import('../views/websites/Pass.vue')
+    path: '/pass',
+    component: () => import('../views/websites/Pass.vue')
   }
   ,
   {
-    path:'/nopass',
-    component:()=>import('../views/websites/Nopass.vue')
+    path: '/nopass',
+    component: () => import('../views/websites/Nopass.vue')
   }
   ,
   {
-    path:'/willpass',
-    component:()=>import('../views/websites/Willpass.vue')
+    path: '/willpass',
+    component: () => import('../views/websites/Willpass.vue')
+  },
+  {
+    path: '/message',
+    component: () => import('../views/Message.vue')
   }
 ]
 
