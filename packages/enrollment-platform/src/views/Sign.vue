@@ -1,29 +1,16 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { admin } from "../api/admin"
-import { pass } from "../api/pass"
-import { nopass } from "../api/noPass"
-import { willpass } from "../api/willPass"
+
 //报名人数信息
 const load = async () => {
   let data = (await admin()).data.data
   tableData.value = data
   total.value = data.length
 }
-//通过人员信息
-const passPerson = async () => {
-  console.log((await pass()).data.data)
-}
-//未通过人员信息
-const noPassPerson = async () => {
-  console.log((await nopass()).data.data)
-}
-//未处理人员信息
-const willPassPerson = async () => {
-  console.log((await willpass()).data.data)
-}
+
 //加载页面时，组件挂载完成后执行
-onMounted(async () => { await load(), passPerson(), noPassPerson(), willPassPerson() })
+onMounted(async () => { await load() })
 const tableData = ref<any[]>([]);
 const total = ref(100);
 
@@ -37,19 +24,6 @@ const handleDel = (index: number, row: any) => {
   console.log(index, row);
 };
 
-const options = [
-  {
-    value: '1',
-    label: '通过',
-  },
-  {
-    value: '2',
-    label: '未通过',
-  },
-  {
-    value: '3',
-    label: '待审核',
-  },]
 </script>
 <template>
   <div class="container">
@@ -59,18 +33,6 @@ const options = [
         <el-table-column label="Order">
           <template #default="scope">
           <span>{{ scope.$index + 1 }}</span>
-        </template>
-        </el-table-column>
-        <el-table-column label="check">
-          <template #default="scope">
-          <el-select v-model="scope.row.value" clearable placeholder="Select" >
-            <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
         </template>
         </el-table-column>
         <el-table-column prop="college" label="College" />

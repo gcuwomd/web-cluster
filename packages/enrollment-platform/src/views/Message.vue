@@ -9,6 +9,9 @@ const Message = async () => {
 onMounted(async () => { await Message() })
 const tableData = ref<any[]>([]);
 const total = ref(100);
+const currentChange = (value: number) => {
+    console.log(value);
+};
 </script>
 
 <template>
