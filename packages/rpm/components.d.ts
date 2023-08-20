@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ChangeWebsiteInfoDialog: typeof import('./src/components/dialogs/ChangeWebsiteInfoDialog.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
@@ -40,15 +41,18 @@ declare module 'vue' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTableItem: typeof import('element-plus/es')['ElTableItem']
+    ElTag: typeof import('element-plus/es')['ElTag']
     ElText: typeof import('element-plus/es')['ElText']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     Footer: typeof import('./src/components/layout/Footer.vue')['default']
     Header: typeof import('./src/components/layout/Header.vue')['default']
     Main: typeof import('./src/components/layout/Main.vue')['default']
-    NewWebsiteDialog: typeof import('./src/components/dialogs/NewWebsiteDialog.vue')['default']
+    PermissionTable: typeof import('./src/components/website/PermissionTable.vue')['default']
+    RouteInfoDialog: typeof import('./src/components/dialogs/RouteInfoDialog.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sider: typeof import('./src/components/layout/Sider.vue')['default']
     Upload: typeof import('./src/components/Upload.vue')['default']
+    WebsiteInfoDialog: typeof import('./src/components/dialogs/WebsiteInfoDialog.vue')['default']
   }
 }

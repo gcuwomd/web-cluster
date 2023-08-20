@@ -1,48 +1,45 @@
 export interface AlovaResponse<T> {
-  code: number;
-  data: T;
-  message: string;
+  code: number
+  data: T
+  message: string
 }
 export interface DepartmentList {
-  label: string;
-  value: string;
+  label: string
+  value: string
   children?: Array<DepartmentList>
 }
 export interface WebsiteBaseInfo {
-  websiteId: string;
-  departmentName: string;
-  websiteUrl: string;
-  websiteName: string;
-  websiteLogo: string;
+  websiteId: string
+  departmentName: string
+  websiteUrl: string
+  websiteName: string
+  websiteLogo: string
 }
 
 export interface WebsiteDetailInfo extends WebsiteBaseInfo {
-  apiNum:number;
-  routeNumber:number;
+  apiNum: number
+  routeNumber: number
 }
 
-export interface ApiListItem {
-  apiDescription:string;
-  apiId:string;
-  apiMethod:string;
-  apiUrl:string;
-  websiteId:string;
+export interface WebsiteApiInfo {
+  apiDescription: string
+  apiId: string
+  apiMethod: string
+  apiType: 'globalApi' | 'pageApi'
+  apiUrl: string
+  routeId: string | null
+  websiteId: string
 }
-export interface RouteListItem {
-  routeDescription:string;
-  routeId:string;
-  routeUrl:string;
-  websiteId:string;
+export interface WebsiteRouteInfo {
+  routeId: string
+  routeDescription: string
+  routeUrl: string
+  websiteId: string
+  pageApi: WebsiteApiInfo[]
+  apiCount: number | null
 }
-export interface PermissionList {
-  row?: ApiListItem[] | RouteListitem [];
-  total?: number;
-  api?: {
-    row: ApiListItem[];
-    total:number;
-  }
-  route?:{
-    row: RouteListitem[];
-    total: number;
-  }
+
+export type WebsitePermissions = {
+  globalApi: WebsiteApiInfo[]
+  routes: WebsiteRouteInfo[]
 }

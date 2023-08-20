@@ -7,7 +7,7 @@ import { WebsiteBaseInfo } from '../../types/response-data-model'
 const websiteList = ref<WebsiteBaseInfo[]>([])
 const openDialog = ref<boolean>(false)
 
-const { onSuccess, send: updateList } = useRequest(getWebsiteList('202110098171'), {
+const { onSuccess, send: updateList } = useRequest(() =>getWebsiteList('202110098172'), {
   force: (shouldForce) => shouldForce
 })
 onSuccess((response) => {
@@ -53,8 +53,10 @@ onSuccess((response) => {
       <h3 class="text-[#c0c4cc]">添加站点</h3>
     </el-card>
   </section>
-  <NewWebsiteDialog
+  <WebsiteInfoDialog
     :open="openDialog"
+    title="添加站点"
+    mode="add"
     @close="
       () => {
         openDialog = false

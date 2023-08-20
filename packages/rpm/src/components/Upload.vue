@@ -1,13 +1,27 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { UploadProps, genFileId, UploadInstance, UploadRawFile } from 'element-plus'
 import { testURL, ACCESS_TOKEN } from '../api/index'
 import { AlovaResponse } from '../types/response-data-model'
 import { deleteUploadedImage } from '../api/methods/upload'
 import { useRequest } from 'alova'
-const emit = defineEmits<{
-  result: [url: string]
+const props = defineProps<{
+  shouldClear?: boolean
 }>()
+const emit = defineEmits<{
+  result: [url: string, mode: string]
+}>()
+
+watch(
+  () => props.shouldClear,
+  (shouldClear) => {
+    if (shouldClear && uploadedImageUrl.value !== '') {
+      deleteImage(uploadedImageUrl.value)
+      uploadedImageUrl.value = ''
+      upload.value?.clearFiles()
+    }
+  }
+)
 
 const { send: deleteImage } = useRequest((key) => deleteUploadedImage(key), { immediate: false })
 
@@ -15,7 +29,7 @@ const upload = ref<UploadInstance>()
 const uploadedImageUrl = ref<string>('')
 const handleSuccess = (response: AlovaResponse<string>) => {
   uploadedImageUrl.value = response.data
-  emit('result', response.data)
+  emit('result', response.data, 'upload')
 }
 const handleExceed: UploadProps['onExceed'] = async (files) => {
   await deleteImage(uploadedImageUrl.value)
@@ -28,6 +42,7 @@ const handleExceed: UploadProps['onExceed'] = async (files) => {
 const handleRemove: UploadProps['onRemove'] = async () => {
   await deleteImage(uploadedImageUrl.value)
   uploadedImageUrl.value = ''
+  emit('result', uploadedImageUrl.value, 'remove')
 }
 </script>
 <template>
