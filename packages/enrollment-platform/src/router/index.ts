@@ -19,8 +19,18 @@ const routes: RouteRecordRaw[] = [
     component: ()=>import('../views/Sign.vue')
   },
   {
-    path:'/check',
-    component:()=>import('../views/Check.vue')
+    path:'/pass',
+    component:()=>import('../views/websites/Pass.vue')
+  }
+  ,
+  {
+    path:'/nopass',
+    component:()=>import('../views/websites/Nopass.vue')
+  }
+  ,
+  {
+    path:'/willpass',
+    component:()=>import('../views/websites/Willpass.vue')
   }
 ]
 

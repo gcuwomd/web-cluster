@@ -1,7 +1,18 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref,onMounted } from "vue";
+import { nopass } from "../../api/noPass"
 const tableData = ref<any[]>([]);
 const total = ref(100);
+//通过人员信息
+const nopassPerson = async () => {
+  console.log((await nopass()).data.data)
+  let data = (await nopass()).data.data
+  tableData.value = data
+  total.value = data.length
+}
+
+onMounted(async () => { await nopassPerson()})
+
 const currentChange = (value: number) => {
     console.log(value);
 };
@@ -22,7 +33,6 @@ const handleDel = (index: number, row: any) => {
                         <span>{{ scope.$index + 1 }}</span>
                     </template>
                 </el-table-column>
-
                 <el-table-column prop="college" label="College" />
                 <el-table-column prop="volunteer" label="Volunteer" width="120" />
                 <el-table-column prop="gender" label="Gender" />
