@@ -4,6 +4,7 @@ import { admin } from "../api/admin"
 
 //报名人数信息
 const load = async () => {
+  console.log((await admin()).data.data);
   let data = (await admin()).data.data
   tableData.value = data
   total.value = data.length
@@ -17,12 +18,6 @@ const total = ref(100);
 const currentChange = (value: number) => {
   console.log(value);
 };
-const handleEdit = (index: number, row: any) => {
-  console.log(index, row);
-};
-const handleDel = (index: number, row: any) => {
-  console.log(index, row);
-};
 
 </script>
 <template>
@@ -32,11 +27,25 @@ const handleDel = (index: number, row: any) => {
         <el-table-column type="selection" />
         <el-table-column label="Order">
           <template #default="scope">
-          <span>{{ scope.$index + 1 }}</span>
-        </template>
+            <span>{{ scope.$index + 1 }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="image" label="Image">
+          <template #default="scope">
+              <div v-for="(val, index) in scope.row.image" :key="index">
+                  <el-image style="width: 70px; height: 70px" :src="val" alt=""></el-image>
+              </div>
+          </template>
         </el-table-column>
         <el-table-column prop="college" label="College" />
-        <el-table-column prop="volunteer" label="Volunteer" width="120"/>
+        <el-table-column prop="id" label="Id" />
+        <el-table-column label="Volunteer" width="120">
+          <template #default="scope">
+            <div v-for="(val, index) in scope.row.volunteer" :key="index">
+              <div>{{ val + '\n' }}</div>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="gender" label="Gender" />
         <el-table-column prop="major" label="Major" />
         <el-table-column prop="introduction" label="Introduction" width="120">
@@ -53,12 +62,6 @@ const handleDel = (index: number, row: any) => {
           </template>
         </el-table-column>
         <el-table-column prop="username" label="Name" width="80" />
-        <el-table-column label="Operations" width="180">
-          <template #default="scope">
-            <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-            <el-button size="small" type="danger" @click="handleDel(scope.$index, scope.row)">Delete</el-button>
-          </template>
-        </el-table-column>
       </el-table>
     </div>
     <el-pagination background layout="prev,pager,next" :total="total" @current-change="currentChange"
