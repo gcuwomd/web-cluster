@@ -17,7 +17,7 @@
       </el-menu-item>
       <el-menu-item index="/message">
         <div class="i-majesticons:mail-line text-2xl mr-2"></div>
-        <span>发送短信</span>
+        <span>短信回复</span>
       </el-menu-item>
     </el-menu>
   </div>
