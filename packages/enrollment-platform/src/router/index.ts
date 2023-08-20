@@ -17,6 +17,10 @@ const routes: RouteRecordRaw[] = [
   {
     path:'/sign',
     component: ()=>import('../views/Sign.vue')
+  },
+  {
+    path:'/check',
+    component:()=>import('../views/Check.vue')
   }
 ]
 

@@ -15,6 +15,10 @@
         <div class="i-majesticons:users-line text-2xl mr-2"></div>
         <span>报名情况</span>
       </el-menu-item>
+      <el-menu-item index="/check">
+        <div class="i-majesticons:users-line text-2xl mr-2"></div>
+        <span>审核</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
