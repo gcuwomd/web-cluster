@@ -1,27 +1,16 @@
-import BaseAxios from '../index'
+import { testAlova } from '..'
+import { AlovaResponse } from '../../types/response-data-model'
 //添加角色 post
 export const AddRole = (roleName: string, departmentId: string) => {
-  return BaseAxios.post(
-    '/auth/role',
-    {
-      roleName: roleName,
-      departmentId: departmentId
-    },
-    {
-      headers: {
-        Authorization: ''
-      }
-    }
-  )
+  return testAlova.Post<AlovaResponse<null>>(`/auth/role`, {
+    roleName: roleName,
+    departmentId: departmentId,
+    shareRequest: false
+  })
 }
 //删除角色 del
-export const DelRole = () => {
-  return BaseAxios.delete('/auth/role', {
-    headers: {
-      Authorization: ''
-    },
-    params: {
-      roleId: ''
-    }
+export const DelRole = (roleId: string) => {
+  return testAlova.Delete(`/auth/role?roleId=${roleId}`, {
+    shareRequest: false
   })
 }

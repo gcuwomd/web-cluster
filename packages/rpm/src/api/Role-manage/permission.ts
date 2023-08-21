@@ -1,32 +1,20 @@
-import BaseAxios from '../index'
+import { testAlova } from '..'
+import { AlovaResponse } from '../../types/response-data-model'
+import { Permissions } from '../../views/role/Role.vue'
 //分配角色权限 post
-export const AssignRole = (roleId: string, permissions: string[]) => {
-  return BaseAxios.post(
-    '/auth/role/permission',
-    {
-      roleId: roleId,
-      permissions: permissions
-    },
-    {
-      headers: {
-        Authorization: ''
-      }
-    }
-  )
+export const AssignAut = (roleId: string, permissions: Permissions[]) => {
+  return testAlova.Post<AlovaResponse<null>>(`/auth/role/permission&permission=${permissions}`, {
+    roleId: roleId,
+    permission: permissions,
+    shareRequest: false
+  })
 }
 //删除角色权限 put
-export const ModifyRole = (roleId: string, route: string[] | null, api: string[] | null) => {
-  return BaseAxios.put(
-    '/auth/role/permission',
-    {
-      roleId: roleId,
-      route: route,
-      api: api
-    },
-    {
-      headers: {
-        Authorization: ''
-      }
-    }
-  )
+export const DeleteAut = (roleId: string, route: string[] | null, api: string[] | null) => {
+  return testAlova.Put<AlovaResponse<null>>(`/auth/role/permission?roleId`, {
+    roleId: roleId,
+    route: route,
+    api: api,
+    shareRequest: false
+  })
 }

@@ -11,6 +11,7 @@ export default defineConfig({
     vue(),
     unocss({ presets: [presetUno(), presetIcons()] }),
     AutoImport({
+      imports: ['vue', 'vue-router'],
       resolvers: [ElementPlusResolver()]
     }),
     Components({
