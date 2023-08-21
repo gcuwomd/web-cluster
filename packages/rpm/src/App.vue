@@ -1,9 +1,4 @@
-<script setup lang="ts">
-import Role from './views/role/Role.vue'
-/* import autlist from './views/role/autlist.vue' */
-/* import WebsiteDetial from './views/website/WebsiteDetial.vue' */
-/*import WebsiteList from './views/website/WebsiteList.vue' */
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="h-screen">
@@ -17,11 +12,7 @@ import Role from './views/role/Role.vue'
         </el-aside>
         <el-container>
           <el-main>
-            <!--  <Main /> -->
-            <Role></Role>
-            <!-- <autlist></autlist> -->
-            <!-- <WebsiteDetial></WebsiteDetial> -->
-            <!-- <WebsiteList></WebsiteList> -->
+            <Main />
             <index></index>
           </el-main>
           <el-footer>

@@ -30,15 +30,7 @@ export interface GetRoleList {
   total: number
   row: RoleListItem[]
 }
-export interface routes {
-  routeId: string
-  routeDescription: string
-  websiteId: string
-}
-export interface RoleGetPermissionList {
-  routes: routes[]
-  globalApi: string[]
-}
+
 export interface WebsiteApiInfo {
   apiDescription: string
   apiId: string
