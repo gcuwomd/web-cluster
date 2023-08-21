@@ -1,6 +1,6 @@
 import BaseAxios from "./index";
-export const pass =()=>{
-    return BaseAxios.get("/user/pass",{
+export const message =()=>{
+    return BaseAxios.get("/message/reply",{
         headers:{},
         params:{
             departmentId:1
