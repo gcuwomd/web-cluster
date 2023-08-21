@@ -8,7 +8,7 @@
       <el-header class="border-b-1 border-b-solid border-b-[#dcdfe6]">
         <Header />
       </el-header>
-      <el-container class="h-full">
+      <el-container class="h-full overflow-hidden">
         <el-aside width="200px">
           <Sider />
         </el-aside>
