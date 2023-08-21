@@ -18,3 +18,4 @@ export const DeleteAut = (roleId: string, route: string[] | null, api: string[] 
     shareRequest: false
   })
 }
+;``

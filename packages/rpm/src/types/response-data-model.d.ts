@@ -22,31 +22,6 @@ export interface WebsiteDetailInfo extends WebsiteBaseInfo {
   routeNumber: number
 }
 
-export interface ApiListItem {
-  apiDescription: string
-  apiId: string
-  apiMethod: string
-  apiUrl: string
-  websiteId: string
-}
-export interface RouteListItem {
-  routeDescription: string
-  routeId: string
-  routeUrl: string
-  websiteId: string
-}
-export interface PermissionList {
-  row?: ApiListItem[] | RouteListitem[]
-  total?: number
-  api?: {
-    row: ApiListItem[]
-    total: number
-  }
-  route?: {
-    row: RouteListitem[]
-    total: number
-  }
-}
 export interface RoleListItem {
   roleId: string
   roleName: string
@@ -63,4 +38,26 @@ export interface routes {
 export interface RoleGetPermissionList {
   routes: routes[]
   globalApi: string[]
+}
+export interface WebsiteApiInfo {
+  apiDescription: string
+  apiId: string
+  apiMethod: string
+  apiType: 'globalApi' | 'pageApi'
+  apiUrl: string
+  routeId: string | null
+  websiteId: string
+}
+export interface WebsiteRouteInfo {
+  routeId: string
+  routeDescription: string
+  routeUrl: string
+  websiteId: string
+  pageApi: WebsiteApiInfo[]
+  apiCount: number | null
+}
+
+export type WebsitePermissions = {
+  globalApi: WebsiteApiInfo[]
+  routes: WebsiteRouteInfo[]
 }
