@@ -8,6 +8,7 @@ export interface DepartmentList {
   value: string
   children?: Array<DepartmentList>
 }
+
 export interface WebsiteBaseInfo {
   websiteId: string
   departmentName: string
@@ -19,6 +20,15 @@ export interface WebsiteBaseInfo {
 export interface WebsiteDetailInfo extends WebsiteBaseInfo {
   apiNum: number
   routeNumber: number
+}
+
+export interface RoleListItem {
+  roleId: string
+  roleName: string
+}
+export interface GetRoleList {
+  total: number
+  row: RoleListItem[]
 }
 
 export interface WebsiteApiInfo {

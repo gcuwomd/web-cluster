@@ -27,10 +27,12 @@ const { send: deleteImage } = useRequest((key) => deleteUploadedImage(key), { im
 
 const upload = ref<UploadInstance>()
 const uploadedImageUrl = ref<string>('')
+
 const handleSuccess = (response: AlovaResponse<string>) => {
   uploadedImageUrl.value = response.data
   emit('result', response.data, 'upload')
 }
+
 const handleExceed: UploadProps['onExceed'] = async (files) => {
   await deleteImage(uploadedImageUrl.value)
   uploadedImageUrl.value = ''

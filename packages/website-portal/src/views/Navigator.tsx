@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import logo from '../assets/gcu-womd.png'
 import Header from '../components/Header'
 import { FloatButton } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { BAEE_URL } from '../api'
 type Website = {
   name: string
   icon: string
@@ -10,6 +11,10 @@ type Website = {
 }
 const Navigator = () => {
   const nav = useNavigate()
+  const location = useLocation()
+  const query = new URLSearchParams(location.search)
+  const code = query.get('code');
+
   const [websiteList, setWebsiteList] = useState<Website[]>([
     {
       name: 'test',
@@ -22,6 +27,25 @@ const Navigator = () => {
     list.fill(websiteList[0])
     setWebsiteList(list)
   }, [])
+  useEffect(() => {
+
+    if (code) {
+      const formData = new FormData();
+      formData.append("grant_type", "authorization_code")
+      formData.append("redirect_uri", "http://127.0.0.1:5173")
+      formData.append("code", code)
+      fetch(`${BAEE_URL}/oauth2/token`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          "Authorization": "Basic bWVzc2FnaW5nLWNsaWVudDpzZWNyZXQ=",
+          "Access-Control-Allow-Origin": 'no-cors'
+        },
+        redirect: 'follow'
+      })
+    }
+  }, [code])
+
   return (
     <>
       <Header title="网站运维部站点导航" />
@@ -53,6 +77,9 @@ const Navigator = () => {
         <FloatButton
           icon={<div className="i-ant-design:login-outlined text-xl"></div>}
           tooltip="登录"
+          onClick={() => {
+            window.location = "http://43.139.117.216:9821/oauth2/authorize?response_type=code&client_id=messaging-client&scope=message.read&redirect_uri=http://127.0.0.1:5173"
+          }}
         />
         <FloatButton
           icon={<div className="i-ant-design:form-outlined text-xl"></div>}
