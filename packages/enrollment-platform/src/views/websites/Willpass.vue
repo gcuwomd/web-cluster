@@ -1,40 +1,66 @@
 <script setup lang="ts">
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { willpass } from "../../api/willPass"
+import { ElTable } from 'element-plus'
+import { sendpass } from "../../api/send"
 const tableData = ref<any[]>([]);
 const total = ref(100);
+const table = ref<InstanceType<typeof ElTable>>()
 //通过人员信息
 const willpassPerson = async () => {
-  console.log((await willpass()).data.data)
-  let data = (await willpass()).data.data
-  tableData.value = data
-  total.value = data.length
+    let data = (await willpass()).data.data
+    tableData.value = data
+    total.value = data.length
 }
 
-onMounted(async () => { await willpassPerson()})
+onMounted(async () => { await willpassPerson() })
 
 const currentChange = (value: number) => {
     console.log(value);
 };
-const handleEdit = (index: number, row: any) => {
-    console.log(index, row);
-};
-const handleDel = (index: number, row: any) => {
-    console.log(index, row);
-};
+
+const handleCheck = async () => {
+    let getrow = table.value!.getSelectionRows()
+    let arr: string[] = [];
+    for (let index = 0; index < getrow.length; index++) {
+        if(getrow[index].messageStatus===0){
+            let getid: any =getrow[index].id
+            arr.push(getid)
+            await sendpass(arr, "face")
+        }else{
+            alert("你已经发过了！")
+        }
+    }
+}
 </script>
 <template>
     <div class="container">
+        <el-button size="small" plain @click="handleCheck()">发送请求</el-button>
         <div style="margin-top: 10px">
-            <el-table :data="tableData" style="width: 100%">
-                <el-table-column type="selection" />
+            <el-table ref="table" :data="tableData" style="width: 100%">
+                <el-table-column type="selection" width="55">
+                </el-table-column>
                 <el-table-column label="Order">
                     <template #default="scope">
                         <span>{{ scope.$index + 1 }}</span>
                     </template>
                 </el-table-column>
+                <el-table-column prop="image" label="Image">
+                    <template #default="scope">
+                        <div v-for="(val, index) in scope.row.image" :key="index">
+                            <el-image style="width: 70px; height: 70px" :src="val" alt=""></el-image>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="college" label="College" />
-                <el-table-column prop="volunteer" label="Volunteer" width="120" />
+                <el-table-column prop="id" label="Id" />
+                <el-table-column label="Volunteer" width="120">
+                    <template #default="scope">
+                        <div v-for="(val, index) in scope.row.volunteer" :key="index">
+                            <div>{{ val + '\n' }}</div>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="gender" label="Gender" />
                 <el-table-column prop="major" label="Major" />
                 <el-table-column prop="introduction" label="Introduction" width="120">
@@ -52,12 +78,6 @@ const handleDel = (index: number, row: any) => {
                     </template>
                 </el-table-column>
                 <el-table-column prop="username" label="Name" width="80" />
-                <el-table-column label="Operations" width="180">
-                    <template #default="scope">
-                        <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                        <el-button size="small" type="danger" @click="handleDel(scope.$index, scope.row)">Delete</el-button>
-                    </template>
-                </el-table-column>
             </el-table>
         </div>
         <el-pagination background layout="prev,pager,next" :total="total" @current-change="currentChange"
