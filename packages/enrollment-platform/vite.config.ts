@@ -16,5 +16,16 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()]
     })
-  ]
+  ],
+  server:{
+    proxy:{
+      '/api':{//发送请求的地址都改为'/api'
+        target:"",//相当于baseUrl
+        changeOrigin:true,
+        rewrite(path){
+          return path.replace(/^\/api/,'')
+        }
+      }
+    }
+  }
 })

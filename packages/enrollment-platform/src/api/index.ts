@@ -3,7 +3,7 @@ import { setInterceptors } from './interceptors' // 拦截器
 
 // Axios 配置
 const config={
-    baseURL: "http://gcxtuf.natappfree.cc",
+    baseURL: "/api",//改为'/api'
     timeout:1000*60*60, // 超时
     headers: {
         "Content-Type": "application/json",

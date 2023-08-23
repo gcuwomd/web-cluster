@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const token=ref("eyJraWQiOiJlMTFhNGUyMy05YzlkLTQzMzQtOWRiMS0yNDQ2NDFiNjI0N2QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIyMDIxMTAwOTgxNzIiLCJhdWQiOiJtZXNzYWdpbmctY2xpZW50IiwibmJmIjoxNjkyNTE3NzY2LCJzY29wZSI6WyJtZXNzYWdlLnJlYWQiXSwiaXNzIjoiaHR0cDovLzQzLjEzOS4xMTcuMjE2Ojk4MjEiLCJleHAiOjE2OTI1NjA5NjYsImlhdCI6MTY5MjUxNzc2Nn0.eByd6B_0cYiGYaZfWUHE9tlAmHTxipNAQTeFEHxCRtvtPrxvtvoXR9kYeoBk1Il9ss-wJ5huZYU2qtw3Bq7E_xnAaztPAbpbIlCWEkHTfC7teOXQ_lE7E0FFzOnnqZ9zrGVnytlsFOOQCGTUbLCxmgC13MDJLQ8UfKEt3jSg8wWLG-C2d8WRdj77_D-qOUZdCFbhF8TosAOssVDoHvSVFuMeG07F4H9iVXNBe8TkCjEyu021SrsyaGY9ot1gULz30ygqab05S6HKL1NAwQufJfGM8c112OOjotTgTtW9aPdxaQRnpNmd4rd0ICyhgnMp3UrejpzL3KT0L8uvAcyobg");
+const token=ref("");
 export function setInterceptors(axios: AxiosInstance) {
     // 添加请求拦截器
     axios.interceptors.request.use(
