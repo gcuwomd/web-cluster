@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { nopass } from "../../api/noPass"
+import { ElTable } from 'element-plus'
+import { sendpass } from "../../api/send"
 const tableData = ref<any[]>([]);
 const total = ref(100);
-//通过人员信息
+const table = ref<InstanceType<typeof ElTable>>()
+//未通过人员信息
 const nopassPerson = async () => {
     let data = (await nopass()).data.data
     tableData.value = data
@@ -15,7 +18,18 @@ onMounted(async () => { await nopassPerson() })
 const currentChange = (value: number) => {
     console.log(value);
 };
-const handleCheck = () => {
+const handleCheck = async() => {
+    let getrow = table.value!.getSelectionRows()
+    let arr: string[] = [];
+    for (let index = 0; index < getrow.length; index++) {
+        if(getrow[index].messageStatus===0){
+            let getid: any =getrow[index].id
+            arr.push(getid)
+            await sendpass(arr, "fail")
+        }else{
+            alert("你已经发过了！")
+        }
+    }
 
 }
 </script>
