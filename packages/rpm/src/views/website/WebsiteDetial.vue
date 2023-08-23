@@ -2,7 +2,6 @@
 import { useRequest } from 'alova'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-
 import { getWebsiteDetailInfo } from '../../api/methods/website'
 import { WebsiteDetailInfo } from '../../types/response-data-model'
 
