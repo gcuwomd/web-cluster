@@ -13,7 +13,7 @@ export const useStore = defineStore("userInfo", () => {
     const route=ref<Array<object>>()
     return { websiteId,refresh_token,access_token,name,organizationId,departmentId,avatar,api,route }
 },
-{ // 特别感谢 @唯选 指正，已修改
+{ 
     persist: {
         enabled: true,
     }},)

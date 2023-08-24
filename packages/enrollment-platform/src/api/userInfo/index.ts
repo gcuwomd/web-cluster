@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { useStore } from '../../store'
-import {getAccessToken} from '../token'
 export const getUserInfo=()=>{
     const store=useStore();
     console.log(store.access_token);
@@ -25,6 +24,6 @@ export const getUserInfo=()=>{
         console.log(store.avatar);
         
     }).catch(()=>{
-            getAccessToken();
+            // getAccessToken();
     })
 }

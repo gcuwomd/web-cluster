@@ -25,7 +25,6 @@ import { departmentData } from "../../api/statistics";
               initChart();
             } 
         catch (error) {
-              console.error(error);
             }
 });
       const initChart = () => { 

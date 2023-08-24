@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { getAccessToken} from './api/token'
-getAccessToken()
+import {refresh_tokens} from './localStore'
+console.log(refresh_tokens.value===null);
+if(refresh_tokens.value===null){
+  getAccessToken()
+}
+
+
 </script>
 
 <template>

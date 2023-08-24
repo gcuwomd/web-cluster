@@ -1,9 +1,6 @@
 import { AxiosInstance } from "axios";
-import { ref } from "vue";
 import { useStore } from "../store";
-import { useRouter } from "vue-router";
 import { getAccessToken } from "./token";
-const router = useRouter();
 
 export function setInterceptors(axios: AxiosInstance) {
     const store=useStore()
@@ -30,15 +27,13 @@ export function setInterceptors(axios: AxiosInstance) {
             // 2xx 范围内的状态码都会触发该函数。
             // 对响应数据做点什么
             // Token 过期
-            getAccessToken()
-            
             return response;
         },
-        function (error) {
+        function () {
             // 超出 2xx 范围的状态码都会触发该函数。
             // 对响应错误做点什么
             // const status = error.response.status;
-         
+            
             getAccessToken()
             
             // if (status == 500) {
