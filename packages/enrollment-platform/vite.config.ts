@@ -16,11 +16,17 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()]
     })
+   
   ],
+  resolve:{
+    dedupe:[
+      'vue'
+    ]
+  },
   server:{
     proxy:{
       '/api':{//发送请求的地址都改为'/api'
-        target:"",//相当于baseUrl
+        target:"http://43.139.117.216:9821",//相当于baseUrl
         changeOrigin:true,
         rewrite(path){
           return path.replace(/^\/api/,'')

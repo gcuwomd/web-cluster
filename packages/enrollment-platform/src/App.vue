@@ -1,5 +1,6 @@
 <script setup lang="ts">
-
+import { getAccessToken} from './api/token'
+getAccessToken()
 </script>
 
 <template>
