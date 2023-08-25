@@ -1,10 +1,12 @@
 import { createAlova } from 'alova'
 import ReactHook from 'alova/react'
 import GlobalFetch from 'alova/GlobalFetch'
+import { AUTH_URL } from '../const'
 /**
  * @description 创建一个 alova 实例
  */
 export const authAlova = createAlova({
+  baseURL: AUTH_URL,
   // 响应式状态钩子，本项目用 React，因此选择 ReactHook
   statesHook: ReactHook,
   // 请求适配器，使用 Fetch API 作为请求适配器

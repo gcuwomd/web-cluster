@@ -5,42 +5,46 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useRequest } from 'alova'
 import { OAuthToken, WebsiteListItem } from '../types/ResponseDataModel'
 import { getUserBasicInfo } from '../api/methods/rbac'
-import { LOGIN_URL, REDIRECT_URL } from '../const'
+import { LOGIN_URL } from '../const'
 import { useSkip } from '../hooks'
+import { getToken, refreshAccessToken } from '../api/methods/auth'
 
 const Navigator = () => {
   const nav = useNavigate()
   const location = useLocation()
-  const query = new URLSearchParams(location.search)
-  const code = query.get('code');
   const skip = useSkip()
   const { send: getUserInfo, onSuccess: getUserInfoSuccess } = useRequest(getUserBasicInfo, { immediate: false })
   getUserInfoSuccess((response) => {
-    const { data: { data: { websiteList } } } = response
-    setWebsiteList(websiteList)
+    const { data: { data: { websiteList, name } } } = response
+    const refreshToken = localStorage.getItem('refresh_token')
+    const websiteDataList = websiteList.map((website) => {
+      website.websiteUrl = `${website.websiteUrl}?refresh_token=${refreshToken}&websiteId=${website.websiteId}`
+      return website
+    })
+    setWebsiteList(websiteDataList)
+    setUserName(name)
   })
   const [websiteList, setWebsiteList] = useState<WebsiteListItem[]>([])
-  
+  const [userName, setUserName] = useState<string>()
+
   useEffect(() => {
-    if (code) {
-      const formData = new FormData();
-      formData.append("grant_type", "authorization_code")
-      formData.append("redirect_uri", REDIRECT_URL)
-      formData.append("code", code)
-      fetch(`/oauth/oauth2/token`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          "Authorization": "Basic bWVzc2FnaW5nLWNsaWVudDpzZWNyZXQ=",
-        },
-        redirect: 'follow'
-      }).then((response) => response.json()).then((data: OAuthToken) => {
+    const query = new URLSearchParams(location.search)
+    const code = query.get('code');
+    const refreshToken = localStorage.getItem('refresh_token')
+    if (refreshToken) {
+      refreshAccessToken(refreshToken).then((data: OAuthToken) => {
+        sessionStorage.setItem("access_token", `${data.token_type} ${data.access_token}`)
+        getUserInfo()
+      })
+    } else if (code) {
+      getToken(code).then((data: OAuthToken) => {
         localStorage.setItem("refresh_token", data.refresh_token)
         sessionStorage.setItem("access_token", `${data.token_type} ${data.access_token}`)
         getUserInfo()
       })
     }
-  }, [code,getUserInfo])
+
+  }, [])
 
   return (
     <>
@@ -68,7 +72,7 @@ const Navigator = () => {
         icon={<div className="i-ant-design:user-outlined"></div>}
         shape="square"
       >
-        <FloatButton description={'您已登录'} shape="square" />
+        <FloatButton description={userName} shape="square" />
         <FloatButton icon={<div className="i-mdi:power text-xl"></div>} tooltip="退出登录" />
         <FloatButton
           icon={<div className="i-ant-design:login-outlined text-xl"></div>}
