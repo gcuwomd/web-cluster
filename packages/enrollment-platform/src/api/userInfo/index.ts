@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useStore } from '../../store'
+import { websiteIds } from '../../localStore';
 export const getUserInfo=()=>{
     const store=useStore();
     console.log(store.access_token);
@@ -11,7 +12,7 @@ export const getUserInfo=()=>{
             'Authorization':`Bearer ${store.access_token}`
         },
         params:{
-            websiteId:store.websiteId
+            websiteId:websiteIds.value
         }
     }).then(response=>{
         const res=response.data.data

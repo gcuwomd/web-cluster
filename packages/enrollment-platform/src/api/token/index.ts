@@ -1,11 +1,14 @@
 
 import {getUserInfo} from '../userInfo'
 import {useStore} from '../../store'
-import {refresh_tokens} from '../../localStore'
+import {refresh_tokens,websiteIds} from '../../localStore'
 export const getAccessToken= ()=>{
     const store=useStore();
     const urlParams = new URLSearchParams(window.location.search);
     const refresh_token = urlParams.get('refresh_token');
+    const websiteId=urlParams.get('websiteId')
+    if(websiteId)
+    websiteIds.value=websiteId
     if(refresh_token||refresh_tokens.value){
         const formData = new FormData();
         formData.append("grant_type", "refresh_token")
@@ -17,7 +20,7 @@ export const getAccessToken= ()=>{
         console.log(refresh_tokens.value);
         
         
-        fetch(`/api/oauth2/token`, {
+        fetch(`http://43.139.117.216:9821/oauth2/token`, {
             method: 'POST',
             body: formData,
             headers: {
