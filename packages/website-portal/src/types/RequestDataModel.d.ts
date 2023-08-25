@@ -14,6 +14,6 @@ export interface RegisterModel extends RegistrationModel {
 
 export interface ResponseModel<T> {
   code: number;
-  data?: T;
-  msg: string;
+  data: T;
+  message: string;
 }
