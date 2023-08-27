@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { nopass } from "../../api/noPass"
+<<<<<<< HEAD
 /* import { subNext } from "../../api/submitNext" */
+=======
+>>>>>>> 190d29993caf89b98735d40d740eda0cbf23bbff
 import { ElTable, ElMessage } from 'element-plus'
 import { changepass } from "../../api/status"
 import { admin } from "../../api/admin"
@@ -95,11 +98,14 @@ const handleCheck = async (rowid: string) => {
                         <el-button size="small" plain @click="handleCheck(scope.row.id)">通过</el-button>
                     </template>
                 </el-table-column>
+<<<<<<< HEAD
                 <!-- <el-table-column label="operation">
                     <template #default="scope">
                         <el-button link type="primary" size="small" @click="submitnext(scope.row.id)">提交给下个部门</el-button>
                     </template>
                 </el-table-column> -->
+=======
+>>>>>>> 190d29993caf89b98735d40d740eda0cbf23bbff
             </el-table>
         </div>
         <el-pagination background layout="prev,pager,next" :total="total" @current-change="currentChange"
