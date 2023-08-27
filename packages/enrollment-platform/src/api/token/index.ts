@@ -29,11 +29,10 @@ export const getAccessToken= ()=>{
             redirect: 'follow'
             }).then((response) => response.json()).then((data) => {
             
-          /*       if(data.error){
+                if(data.error){
                     refresh_tokens.value=null
                     window.location.href = 'http://43.139.117.216:6432';
-                } */
-            
+                }
             refresh_tokens.value=data.refresh_token;
             store.access_token=data.access_token
             
@@ -41,7 +40,7 @@ export const getAccessToken= ()=>{
 
         })
     }else{
-          /*   window.location.href = 'http://43.139.117.216:6432'; */
+            window.location.href = 'http://43.139.117.216:6432';
     }
     
     

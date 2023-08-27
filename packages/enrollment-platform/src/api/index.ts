@@ -3,7 +3,7 @@ import { setInterceptors } from './interceptors' // 拦截器
 
 // Axios 配置
 const config={
-    baseURL: "http://ejdbhi.natappfree.cc",//改为'/api'
+    baseURL: "http://dh7pwv.natappfree.cc",//改为'/api'
     timeout:1000*60*60, // 超时
     headers: {
         "Content-Type": "application/json",

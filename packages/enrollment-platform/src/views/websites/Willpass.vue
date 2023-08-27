@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { willpass } from "../../api/willPass"
-import { ElTable } from 'element-plus'
-import { sendpass } from "../../api/send"
+import { ElTable, ElMessage } from 'element-plus'
+import { changepass } from "../../api/status"
+import { admin } from "../../api/admin"
 const tableData = ref<any[]>([]);
 const total = ref(100);
 const table = ref<InstanceType<typeof ElTable>>()
@@ -18,52 +19,62 @@ onMounted(async () => { await willpassPerson() })
 const currentChange = (value: number) => {
     console.log(value);
 };
-
-const handleCheck = async () => {
-    let getrow = table.value!.getSelectionRows()
-    let arr: string[] = [];
-    for (let index = 0; index < getrow.length; index++) {
-        if(getrow[index].messageStatus===0){
-            let getid: any =getrow[index].id
-            arr.push(getid)
-            await sendpass(arr, "face")
-        }else{
-            alert("你已经发过了！")
-        }
+const handleSuccess = async (rowid: string) => {
+    const { message }: any = await changepass(rowid, "1")
+    if (message === "success") {
+        let data = (await admin()).data.data
+        tableData.value = data
+        total.value = data.length
+        ElMessage.success("修改成功！")
+    }
+}
+const handleError = async (rowid: string) => {
+    const { message }: any = await changepass(rowid, "-1")
+    if (message === "success") {
+        let data = (await admin()).data.data
+        tableData.value = data
+        total.value = data.length
+        ElMessage.success("修改成功！")
     }
 }
 </script>
 <template>
     <div class="container">
-        <el-button size="small" plain @click="handleCheck()">发送请求</el-button>
+        <el-button size="small" plain disabled>发送请求</el-button>
         <div style="margin-top: 10px">
             <el-table ref="table" :data="tableData" style="width: 100%">
                 <el-table-column type="selection" width="55">
                 </el-table-column>
-                <el-table-column label="Order">
+                <el-table-column label="Order" width="80">
                     <template #default="scope">
                         <span>{{ scope.$index + 1 }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="image" label="Image">
+                <el-table-column prop="image" label="Image" align="center">
                     <template #default="scope">
                         <div v-for="(val, index) in scope.row.image" :key="index">
-                            <el-image style="width: 70px; height: 70px" :src="val" alt=""></el-image>
+                            <div class="block text-center">
+                                <el-carousel height="70px" :autoplay="false" indicator-position="outside">
+                                    <el-carousel-item v-for="index in 4" :key="index">
+                                        <el-image style="width: 70px; height: 70px;" :src="val" alt=""></el-image>
+                                    </el-carousel-item>
+                                </el-carousel>
+                            </div>
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="college" label="College" />
                 <el-table-column prop="id" label="Id" />
-                <el-table-column label="Volunteer" width="120">
+                <el-table-column label="Volunteer">
                     <template #default="scope">
                         <div v-for="(val, index) in scope.row.volunteer" :key="index">
                             <div>{{ val + '\n' }}</div>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="gender" label="Gender" />
+                <el-table-column prop="gender" label="Gender" width="80" />
                 <el-table-column prop="major" label="Major" />
-                <el-table-column prop="introduction" label="Introduction" width="120">
+                <el-table-column prop="introduction" label="Introduction">
                     <template #default="scope">
                         <el-tooltip :content="scope.row.introduction" raw-content placement="top-start"
                             v-if="scope.row.introduction">
@@ -78,6 +89,12 @@ const handleCheck = async () => {
                     </template>
                 </el-table-column>
                 <el-table-column prop="username" label="Name" width="80" />
+                <el-table-column label="Operation">
+                    <template #default="scope">
+                        <el-button size="small" plain @click="handleSuccess(scope.row.id)">通过</el-button>
+                        <el-button size="small" plain @click="handleError(scope.row.id)">未通过</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
         </div>
         <el-pagination background layout="prev,pager,next" :total="total" @current-change="currentChange"
