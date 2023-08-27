@@ -25,30 +25,37 @@ const currentChange = (value: number) => {
     <div style="margin-top: 10px">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="selection" />
-        <el-table-column label="Order">
+        <el-table-column label="Order" width="80">
           <template #default="scope">
             <span>{{ scope.$index + 1 }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="image" label="Image">
+        <el-table-column prop="image" label="Image" align="center">
           <template #default="scope">
-              <div v-for="(val, index) in scope.row.image" :key="index">
-                  <el-image style="width: 70px; height: 70px" :src="val" alt=""></el-image>
+            <div v-for="(val, index) in scope.row.image" :key="index">
+              <div class="block text-center">
+                <el-carousel height="70px" :autoplay="false" indicator-position="outside">
+                  <el-carousel-item v-for="index in 4" :key="index">
+                    <el-image style="width: 70px; height: 70px;" :src="val" alt=""></el-image>
+                  </el-carousel-item>
+                </el-carousel>
               </div>
+            </div>
           </template>
         </el-table-column>
         <el-table-column prop="college" label="College" />
         <el-table-column prop="id" label="Id" />
-        <el-table-column label="Volunteer" width="120">
+        <el-table-column label="Volunteer">
           <template #default="scope">
             <div v-for="(val, index) in scope.row.volunteer" :key="index">
-              <div>{{ val + '\n' }}</div>
+              <div>{{ val + '\n' }}
+              </div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="gender" label="Gender" />
+        <el-table-column prop="gender" label="Gender" width="80" />
         <el-table-column prop="major" label="Major" />
-        <el-table-column prop="introduction" label="Introduction" width="120">
+        <el-table-column prop="introduction" label="Introduction">
           <template #default="scope">
             <el-tooltip :content="scope.row.introduction" raw-content placement="top-start" v-if="scope.row.introduction">
               <span v-if="scope.row.introduction && scope.row.introduction.length <= 10">
