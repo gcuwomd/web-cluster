@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { admin } from "../api/admin"
-
+import {Loadlist} from "../api/loadlist"
 //报名人数信息
 const load = async () => {
   console.log((await admin()).data.data);
@@ -19,9 +19,15 @@ const currentChange = (value: number) => {
   console.log(value);
 };
 
+const loadlist = async() =>{
+   await Loadlist()
+}
+
+
 </script>
 <template>
   <div class="container">
+    <el-button size="small" @click="loadlist()">下载表格</el-button>
     <div style="margin-top: 10px">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="selection" />

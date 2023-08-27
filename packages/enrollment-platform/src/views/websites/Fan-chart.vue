@@ -15,8 +15,8 @@ import { departmentData } from "../../api/statistics";
       value: number;
     }
     let arr: Department[] = [];
-  
 
+    
     onMounted(async () => {
 
         try {

@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { nopass } from "../../api/noPass"
 import { ElTable } from 'element-plus'
 import { sendpass } from "../../api/send"
+import { subNext } from "../../api/submitNext"
 const tableData = ref<any[]>([]);
 const total = ref(100);
 const table = ref<InstanceType<typeof ElTable>>()
@@ -30,7 +31,10 @@ const handleCheck = async() => {
             alert("你已经发过了！")
         }
     }
-
+}
+const submitnext = (id:number) =>{
+    console.log(id)
+   /*  subNext(id) */
 }
 </script>
 <template>
@@ -78,6 +82,11 @@ const handleCheck = async() => {
                     </template>
                 </el-table-column>
                 <el-table-column prop="username" label="Name" width="80" />
+                 <el-table-column label="operation">
+                    <template #default="scope">
+                        <el-button link type="primary" size="small" @click="submitnext(scope.row.id)">提交给下个部门</el-button>
+                    </template>
+                </el-table-column>    
             </el-table>
         </div>
         <el-pagination background layout="prev,pager,next" :total="total" @current-change="currentChange"
