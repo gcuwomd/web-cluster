@@ -34,15 +34,21 @@ export const getToken = (code: string) => {
   }).then((response) => response.json())
 }
 
-export const refreshAccessToken = (refreshToken: string) => {
+export const refreshAccessToken = async (refreshToken: string) => {
   const formData = new FormData()
   formData.append('grant_type', 'refresh_token')
   formData.append('refresh_token', refreshToken)
-  return fetch(`${AUTH_URL}/oauth2/token`, {
+  const response = await fetch(`${AUTH_URL}/oauth2/token`, {
     method: 'POST',
     body: formData,
     headers: {
       Authorization: 'Basic bWVzc2FnaW5nLWNsaWVudDpzZWNyZXQ='
     }
-  }).then((response) => response.json())
+  })
+  if (!response.ok) {
+    throw new Error()
+  }
+  return await response.json()
+    
+  
 }

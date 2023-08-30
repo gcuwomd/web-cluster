@@ -1,19 +1,19 @@
 export interface RegistrationModel {
-  username: string;
-  name: string;
-  phone: string;
-  password: string;
-  email: string;
-  code: string;
-  departmentId:string;
+  username: string
+  name: string
+  phone: string
+  password: string
+  email: string
+  code: string
+  departmentId: string[] | string
 }
 
 export interface RegisterModel extends RegistrationModel {
-  verifyPassword: string;
+  verifyPassword: string
 }
 
 export interface ResponseModel<T> {
-  code: number;
-  data: T;
-  message: string;
+  code: number
+  data: T
+  message: string
 }

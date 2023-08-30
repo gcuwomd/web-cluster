@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import { FloatButton } from 'antd'
+import { App, FloatButton } from 'antd'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useRequest } from 'alova'
 import { OAuthToken, WebsiteListItem } from '../types/ResponseDataModel'
@@ -13,6 +13,7 @@ const Navigator = () => {
   const nav = useNavigate()
   const location = useLocation()
   const skip = useSkip()
+  const { message } = App.useApp()
   const { send: getUserInfo, onSuccess: getUserInfoSuccess } = useRequest(getUserBasicInfo, { immediate: false })
   getUserInfoSuccess((response) => {
     const { data: { data: { websiteList, name } } } = response
@@ -35,6 +36,18 @@ const Navigator = () => {
       refreshAccessToken(refreshToken).then((data: OAuthToken) => {
         sessionStorage.setItem("access_token", `${data.token_type} ${data.access_token}`)
         getUserInfo()
+      }).catch(() => {
+        localStorage.removeItem("refresh_token")
+        sessionStorage.removeItem("access_token")
+        if (code) {
+          getToken(code).then((data: OAuthToken) => {
+            localStorage.setItem("refresh_token", data.refresh_token)
+            sessionStorage.setItem("access_token", `${data.token_type} ${data.access_token}`)
+            getUserInfo()
+          })
+        } else {
+          message.error("登录凭证过期，请重新登录")
+        }
       })
     } else if (code) {
       getToken(code).then((data: OAuthToken) => {
@@ -42,8 +55,9 @@ const Navigator = () => {
         sessionStorage.setItem("access_token", `${data.token_type} ${data.access_token}`)
         getUserInfo()
       })
+    } else {
+      message.info("检测到您还未登录，请登录后获取更多可访问站点")
     }
-
   }, [])
 
   return (
