@@ -3,7 +3,7 @@ import { setInterceptors } from './interceptors' // 拦截器
 
 // Axios 配置
 const config = {
-  baseURL: 'http://43.139.117.216:8100', //改为'/api'
+  baseURL: 'https://pass.bamdev.space', //改为'/api'
   timeout: 1000 * 60 * 60, // 超时
   headers: {
     'Content-Type': 'application/json'

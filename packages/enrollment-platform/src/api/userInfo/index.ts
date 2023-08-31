@@ -7,7 +7,7 @@ export const getUserInfo=()=>{
     
     axios({
         method:'GET',
-        url:'http://43.139.117.216:8080/auth/user/info',
+        url:'https://pass.bamdev.space/authority/auth/user/info',
         headers:{
             'Authorization':`Bearer ${store.access_token}`
         },

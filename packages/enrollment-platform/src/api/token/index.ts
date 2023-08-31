@@ -15,7 +15,7 @@ export const getAccessToken = () => {
     console.log(refresh_token)
     console.log(refresh_tokens.value)
 
-    fetch(`http://43.139.117.216:9821/oauth2/token`, {
+    fetch(`http://www.bamdev.space:9821/oauth2/token`, {
       method: 'POST',
       body: formData,
       headers: {
@@ -27,7 +27,7 @@ export const getAccessToken = () => {
       .then((data) => {
         if (data.error) {
           refresh_tokens.value = null
-          window.location.href = 'http://43.139.117.216:6432'
+          window.location.href = 'https://nav.bamdev.space'
         }
         refresh_tokens.value = data.refresh_token
         store.access_token = data.access_token
@@ -35,6 +35,6 @@ export const getAccessToken = () => {
         getUserInfo()
       })
   } else {
-    window.location.href = 'http://43.139.117.216:6432'
+    window.location.href = 'https://nav.bamdev.space'
   }
 }
