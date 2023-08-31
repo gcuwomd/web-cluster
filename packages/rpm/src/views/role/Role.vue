@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted, reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { rolelist } from '../../api/Role-manage/role-list'
 import { AddRole, DelRole } from '../../api/Role-manage/role-manage'
 import { useRequest } from 'alova'
@@ -26,54 +26,63 @@ const total = ref(10)
 const departmentId = ref('89904669e3354e83') //默认
 const delroleId = ref('89904669e3354e83') //确认要删除的roleId
 const AddRoledialog = ref(false) //添加角色
-const deldialog = ref(false) //删除角
+const deldialog = ref(false)
+
 //卡片数组
 const roleData = ref<RoleListItem[]>([])
 
-onMounted(async () => {
-  load(departmentId.value, 10, 1)
-})
 //加载角色卡片信息
-const load = async (departmentId: string, pageSize: number, page: number) => {
-  const { onSuccess } = useRequest(rolelist(departmentId, pageSize, page), {
+
+const { onSuccess: GetroleList, send: updateRoleList } = useRequest(
+  () => rolelist(departmentId.value, pageSize.value, currentPage.value),
+  {
     force: (shouldForce) => shouldForce
-  })
-  onSuccess((response) => {
-    roleData.value = response.data.data.row
-    total.value = response.data.data.total
-  })
-}
+  }
+)
+GetroleList((response) => {
+  roleData.value = response.data.data.row
+  total.value = response.data.data.total
+})
 
 //添加角色
-const RoleAdd = async (name: string, departmentId: string) => {
-  const { onSuccess } = useRequest(AddRole(name, departmentId), {
-    force: (shouldForce) => shouldForce
-  })
-  onSuccess((response) => {
-    console.log(response.data.data)
-    emptyadd()
-  })
-}
+
+const { onSuccess: addrole, send: updateAddRole } = useRequest(
+  () => AddRole(addrolefrom.roleName, departmentId.value),
+  {
+    force: (shouldForce) => shouldForce,
+    immediate: false
+  }
+)
+addrole((response) => {
+  console.log(response.data.data)
+  alert('添加成功')
+  updateRoleList(true)
+  emptyadd()
+})
+
 //删除角色
-const RoleDel = async (id: string) => {
-  const { onSuccess } = useRequest(DelRole(id), {
-    force: (shouldForce) => shouldForce
-  })
-  onSuccess((response) => {
-    console.log(response)
-  })
-}
+
+const { onSuccess, send: updateDelRole } = useRequest(() => DelRole(delroleId.value), {
+  force: (shouldForce) => shouldForce,
+  immediate: false
+})
+onSuccess((response) => {
+  console.log(response)
+  alert('删除成功')
+  updateRoleList(true)
+})
 
 //更新页数和页面卡片大小
 const handleSizeChange = (val: number) => {
   console.log(`${val} items per page`)
   pageSize.value = val
-  load(departmentId.value, pageSize.value, currentPage.value)
+  console.log(pageSize.value)
+  updateRoleList(rolelist(departmentId.value, pageSize.value, currentPage.value))
 }
 const handleCurrentChange = (val: number) => {
   console.log(`current page: ${val}`)
   currentPage.value = val
-  load(departmentId.value, pageSize.value, currentPage.value)
+  updateRoleList(rolelist(departmentId.value, pageSize.value, currentPage.value))
 }
 </script>
 
@@ -108,8 +117,6 @@ const handleCurrentChange = (val: number) => {
                 "
                 >删除角色</el-button
               >
-
-              <!--  RoleDel(RoleListItem.roleId) -->
             </div>
           </template>
           <div class="cards">
@@ -136,7 +143,7 @@ const handleCurrentChange = (val: number) => {
       @current-change="handleCurrentChange"
     />
   </section>
-  <!-- 添加角色 -->
+  <!-- 添加角色对话框 -->
   <el-dialog v-model="AddRoledialog" title="添加角色" width="40%" center>
     <el-form :model="addrolefrom" label-width="120px" style="margin-left: 35px">
       <el-form-item label="roleName">
@@ -173,7 +180,8 @@ const handleCurrentChange = (val: number) => {
           @click="
             () => {
               AddRoledialog = false
-              RoleAdd(addrolefrom.roleName, departmentId)
+              console.log(addrolefrom.roleName)
+              updateAddRole(AddRole(addrolefrom.roleName, departmentId))
             }
           "
         >
@@ -189,7 +197,7 @@ const handleCurrentChange = (val: number) => {
       type="primary"
       @click="
         () => {
-          RoleDel(delroleId) //删除角色
+          updateDelRole(DelRole(delroleId)) //删除角色
           deldialog = false
         }
       "

@@ -15,8 +15,8 @@ import { departmentData } from "../../api/statistics";
       value: number;
     }
     let arr: Department[] = [];
-  
 
+    
     onMounted(async () => {
 
         try {
@@ -25,7 +25,6 @@ import { departmentData } from "../../api/statistics";
               initChart();
             } 
         catch (error) {
-              console.error(error);
             }
 });
       const initChart = () => { 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import logo from '../../assets/gcu-womd.png'
-import avatar from "../../assets/vue.svg"
+import { useStore } from '../../store';
+const store=useStore();
 </script>
 <template>
   <div class="h-full flex justify-between items-center">
@@ -9,10 +10,10 @@ import avatar from "../../assets/vue.svg"
       <h1>招新系统后台</h1>
     </div>
     <div class="flex gap-x-2 items-center">
-      <el-avatar :src="avatar" />
+      <el-avatar :src="store.avatar" />
       <el-dropdown>
         <div class="flex gap-x-2 cursor-pointer focus-visible:outline-none">
-          <el-text size="large">Jammie Griffin</el-text>
+          <el-text size="large">{{store.name}}</el-text>
           <div class="i-ep:arrow-down"></div>
         </div>
         <template #dropdown>

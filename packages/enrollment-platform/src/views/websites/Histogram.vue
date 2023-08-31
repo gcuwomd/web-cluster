@@ -34,7 +34,6 @@ import { onMounted } from "@vue/runtime-core";
     onMounted(async () => {
  try {
    arr = (await departmentData()).data.data.department;
-   console.log((await departmentData()).data.data.department);
    initChart();}
  catch (error) {
    console.error(error);

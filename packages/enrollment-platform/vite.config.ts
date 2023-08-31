@@ -16,5 +16,11 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()]
     })
-  ]
+   
+  ],
+  resolve:{
+    dedupe:[
+      'vue'
+    ]
+  },
 })
