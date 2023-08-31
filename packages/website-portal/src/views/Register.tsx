@@ -6,39 +6,7 @@ import { RegisterModel, RegistrationModel } from '../types/RequestDataModel'
 import { useRequest } from 'alova'
 import { registraion, getCaptcha } from '../api/methods/auth'
 import { alovaErrorHandler } from '../api/middleware'
-type OrgOption = {
-  label: string
-  value: string
-  children?: OrgOption[]
-}
-const orgOptions: OrgOption[] = [
-  {
-    label: '学生网络与信息工作委员会',
-    value: 'SNIC',
-    children: [
-      {
-        label: '网站运维部',
-        value: 'WOMD'
-      },
-      {
-        label: '网络运维部',
-        value: 'NOMD'
-      },
-      {
-        label: '信息化运维部',
-        value: 'IOMD'
-      },
-      {
-        label: '行政秘书部',
-        value: 'SAD'
-      }
-    ]
-  },
-  {
-    label: '访客',
-    value: 'visitor'
-  }
-]
+import { getDeptList } from '../api/methods/rbac'
 const Register = () => {
   // antd Form 表单实例
   const [form] = Form.useForm()
@@ -84,13 +52,19 @@ const Register = () => {
     onSuccess: onGetCodeSuccess,
     onError: onGetCodeError
   } = useRequest((email: string) => getCaptcha(email), { immediate: false })
+  const { data: deptList } = useRequest(getDeptList)
+
   const handleFinish = (value: RegisterModel) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { verifyPassword: _verifyPassword, departmentId: _departmentId, ...rest } = value
-    register({ ...rest, departmentId: '1' })
+    const { verifyPassword: _verifyPassword, departmentId, ...rest } = value
+    register({ ...rest, departmentId: (departmentId as string[]).pop() })
   }
   onRegistrationSuccess((e) => {
-    message.success(e.data.data)
+    if (e.data.code !== 200) {
+      message.error(e.data.message)
+      return
+    }
+    message.success(e.data.message)
     form.resetFields()
   })
   onRegistrationError((e) => {
@@ -217,7 +191,7 @@ const Register = () => {
             name="departmentId"
             rules={[{ required: true, message: '请选择所属组织' }]}
           >
-            <Cascader options={orgOptions} placeholder="请选择所属组织" />
+            <Cascader options={deptList?.data || []} placeholder="请选择所属组织" />
           </Form.Item>
           <Form.Item
             label="邮箱"

@@ -17,3 +17,9 @@ export interface UserBasicInfo {
   avatar: string
   name: string
 }
+
+export interface DeptListItem {
+  label: string
+  value: string
+  children?: Array<DeptListItem>
+}
