@@ -19,7 +19,7 @@ export const authAlova = createAlova({
   responded: (response) => response.json()
 })
 export const rbacAlova = createAlova({
-  baseURL: 'http://43.139.117.216:8080',
+  baseURL: 'https://pass.bamdev.space',
   statesHook: ReactHook,
   requestAdapter: GlobalFetch(),
   beforeRequest(method) {

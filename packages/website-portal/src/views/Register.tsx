@@ -7,6 +7,7 @@ import { useRequest } from 'alova'
 import { registraion, getCaptcha } from '../api/methods/auth'
 import { alovaErrorHandler } from '../api/middleware'
 import { getDeptList } from '../api/methods/rbac'
+import { LOGIN_URL } from '../const'
 const Register = () => {
   // antd Form 表单实例
   const [form] = Form.useForm()
@@ -250,7 +251,7 @@ const Register = () => {
         <Typography.Text type="secondary">已有账号？</Typography.Text>
         <Typography.Link
           onClick={() => {
-            skip('http://43.139.117.216:9821/oauth2/authorize?response_type=code&client_id=messaging-client&scope=message.read&redirect_uri=http://127.0.0.1:5173')
+            skip(LOGIN_URL)
           }}
         >
           前往登录
