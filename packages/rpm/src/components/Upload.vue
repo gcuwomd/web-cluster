@@ -6,19 +6,27 @@ import { AlovaResponse } from '../types/response-data-model'
 import { deleteUploadedImage } from '../api/methods/upload'
 import { useRequest } from 'alova'
 const props = defineProps<{
-  shouldClear?: boolean
+  shouldClean?: boolean
+  shouldDelete?: boolean
 }>()
 const emit = defineEmits<{
   result: [url: string, mode: string]
 }>()
 
 watch(
-  () => props.shouldClear,
-  (shouldClear) => {
-    if (shouldClear && uploadedImageUrl.value !== '') {
-      deleteImage(uploadedImageUrl.value)
+  () => props.shouldClean,
+  (shouldClean) => {
+    if (shouldClean) {
       uploadedImageUrl.value = ''
       upload.value?.clearFiles()
+    }
+  }
+)
+watch(
+  () => props.shouldDelete,
+  (shouldDelete) => {
+    if (shouldDelete && uploadedImageUrl.value !== '') {
+      deleteImage(uploadedImageUrl.value)
     }
   }
 )

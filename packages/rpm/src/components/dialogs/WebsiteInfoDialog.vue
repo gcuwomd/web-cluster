@@ -23,7 +23,11 @@ const emit = defineEmits<{
 // 控制 dialog 打开和关闭
 const open = ref<boolean>(false)
 // 控制 upload 组件的清除工作
-const shouldClear = ref<boolean>(false)
+const shouldClean = ref<boolean>(false) // 是否应该清除上传的文件
+const shouldDelete = ref<boolean>(false) // 是否应该删除当前上传的文件
+// 当表单提交时，该状态为 true，dialog 关闭时不删除上传的文件，当表单没提交时，dialog关闭删除上传的文件
+const isSubmitForm = ref<boolean>(false)
+
 watch(
   () => props.open,
   (isOpen: boolean) => {
@@ -32,7 +36,8 @@ watch(
 )
 
 const handleOpen = () => {
-  shouldClear.value = false
+  shouldClean.value = false
+  isSubmitForm.value = false
   // 通过“修改站点信息”按钮打开 dialog 时，初始化表单数据
   if (props.mode === 'change') {
     const { departmentName, ...rest } = props.formData as WebsiteBaseInfo
@@ -43,7 +48,8 @@ const handleOpen = () => {
 // 关闭 dialog 时，初始化表单，清除upload组件上传的文件
 const closeDialog = () => {
   formRef.value?.resetFields()
-  shouldClear.value = true
+  shouldClean.value = true
+  shouldDelete.value = isSubmitForm.value ? false : true
   emit('close')
 }
 // 获取组织列表
@@ -98,6 +104,7 @@ const submitForm = async () => {
           .then(() => {
             emit('complete')
             message.success({ message: '添加成功' })
+            isSubmitForm.value = true
             closeDialog()
           })
           .catch((error) => {
@@ -108,6 +115,8 @@ const submitForm = async () => {
           .then(() => {
             emit('complete')
             message.success({ message: '修改成功' })
+            isSubmitForm.value = true
+
             closeDialog()
           })
           .catch((error) => {
@@ -163,7 +172,11 @@ const setWebsiteLogoField = (url: string, mode: string) => {
         </div>
       </el-form-item>
       <el-form-item label="站点Logo" prop="websiteLogo">
-        <Upload :should-clear="shouldClear" @result="setWebsiteLogoField" />
+        <Upload
+          :should-clean="shouldClean"
+          :should-delete="shouldDelete"
+          @result="setWebsiteLogoField"
+        />
       </el-form-item>
     </el-form>
     <template #footer>
