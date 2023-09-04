@@ -32,34 +32,25 @@ const Navigator = () => {
     const query = new URLSearchParams(location.search)
     const code = query.get('code');
     const refreshToken = localStorage.getItem('refresh_token')
-    if (refreshToken) {
+    if (code) {
+      getToken(code).then((data: OAuthToken) => {
+        localStorage.setItem("refresh_token", data.refresh_token)
+        sessionStorage.setItem("access_token", `${data.token_type} ${data.access_token}`)
+        getUserInfo()
+      })
+    } else if (refreshToken) {
       refreshAccessToken(refreshToken).then((data: OAuthToken) => {
         sessionStorage.setItem("access_token", `${data.token_type} ${data.access_token}`)
         getUserInfo()
       }).catch(() => {
         localStorage.removeItem("refresh_token")
         sessionStorage.removeItem("access_token")
-        if (code) {
-          getToken(code).then((data: OAuthToken) => {
-            localStorage.setItem("refresh_token", data.refresh_token)
-            sessionStorage.setItem("access_token", `${data.token_type} ${data.access_token}`)
-            getUserInfo()
-          })
-        } else {
-          message.error("登录凭证过期，请重新登录")
-        }
-      })
-    } else if (code) {
-      getToken(code).then((data: OAuthToken) => {
-        localStorage.setItem("refresh_token", data.refresh_token)
-        sessionStorage.setItem("access_token", `${data.token_type} ${data.access_token}`)
-        getUserInfo()
+        message.error("登录凭证过期，请重新登录")
       })
     } else {
       message.info("检测到您还未登录，请登录后获取更多可访问站点")
     }
   }, [])
-
   return (
     <>
       <Header title="网站运维部站点导航" />
