@@ -24,7 +24,12 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/role',
-    component: () => import('../views/role/Role.vue')
+
+    component: () => import('../views/role/Index.vue'),
+    children: [
+      { path: 'list', component: () => import('../views/role/Role.vue') },
+      { path: ':id', name: 'roleDetail', component: () => import('../views/role/RoleDetail.vue') }
+    ]
   },
   {
     path: '/members',

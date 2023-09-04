@@ -22,15 +22,6 @@ export interface WebsiteDetailInfo extends WebsiteBaseInfo {
   routeNumber: number
 }
 
-export interface RoleListItem {
-  roleId: string
-  roleName: string
-}
-export interface GetRoleList {
-  total: number
-  row: RoleListItem[]
-}
-
 export interface WebsiteApiInfo {
   apiDescription: string
   apiId: string
@@ -53,3 +44,25 @@ export type WebsitePermissions = {
   globalApi: WebsiteApiInfo[]
   routes: WebsiteRouteInfo[]
 }
+
+export interface RoleListItem {
+  roleId: string
+  roleName: string
+}
+export interface RoleList {
+  total: number
+  row: RoleListItem[]
+}
+
+export interface RoleInfo extends RoleListItem {
+  apiNumber: number
+  routeNumber: number
+  userNumber: number
+  websiteNumber: number
+}
+
+export type WebsiteOption = Pick<WebsiteBaseInfo, 'websiteId' | 'websiteName'> & {
+  disabled?: boolean
+}
+
+export type AccessibleWebsite = Omit<WebsiteBaseInfo, 'departmentName'>

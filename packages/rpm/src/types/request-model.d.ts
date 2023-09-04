@@ -8,8 +8,13 @@ export interface ChangeWebsiteInfForm extends NewWebsiteForm {
   websiteId: string
 }
 export interface RouteForm {
-  websiteId: string
+  readonly websiteId: string
   routeUrl: string
   routeDescription: string
   routeId?: string
+}
+
+export interface RoleForm {
+  roleName: string;
+  readonly departmentId: string
 }
