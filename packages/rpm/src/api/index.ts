@@ -4,8 +4,9 @@ import vueHook from 'alova/vue'
 
 export const ACCESS_TOKEN =
   'Bearer ' +
-  'eyJraWQiOiJlMTFhNGUyMy05YzlkLTQzMzQtOWRiMS0yNDQ2NDFiNjI0N2QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIyMDIxMTAwOTgxNzIiLCJhdWQiOiJtZXNzYWdpbmctY2xpZW50IiwibmJmIjoxNjkyNTg2OTc2LCJzY29wZSI6WyJtZXNzYWdlLnJlYWQiXSwiaXNzIjoiaHR0cDovLzQzLjEzOS4xMTcuMjE2Ojk4MjEiLCJleHAiOjE2OTI2MzAxNzYsImlhdCI6MTY5MjU4Njk3Nn0.a7ucEo6yrQrQWkKgchOqkqSTBliRQ-MKY2F4xklDP2xjKWFSLSK9Vg5sduTSi_vAYafMZOEu9ORW6oBWQKwMfNtud6e3U-QOl6nsDbrvUcdBk0HYK5KgzWXgSflXH5OjrPpXJFWYoV0VM-qLH3VNNSl6DuGGsYBg3Nzrxb2AInY9C3TCSJKRvO3wrJllu3-yqWj0lG8f8CgVpWMHz7DEqcrg0Nc6HN5saMDLsahLh91EIUrM7PYVtDhMC-a4PjSD4PHNrwR-8w_ElYD8zuSA8xQjjWJ_KnFl-KqjWXL7QlS9t0n60EXmD4Gwzou68eg6eZlk2AdCRXJ3CDMvBk9yKQ'
-export const testURL = ' http://n5ujj8.natappfree.cc'
+  'eyJraWQiOiJhMWFkYmZiZC1hZDU0LTRmYTAtYTFhMS01ZjNlMGY1ZDNjZGUiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIyMDIwMTAwODkyNDAiLCJhdWQiOiJtZXNzYWdpbmctY2xpZW50IiwibmJmIjoxNjkzNzQ5NDU3LCJzY29wZSI6WyJtZXNzYWdlLnJlYWQiXSwiaXNzIjoiaHR0cHM6Ly93d3cuYmFtZGV2LnNwYWNlOjk4MjEiLCJleHAiOjE2OTM3OTI2NTcsImlhdCI6MTY5Mzc0OTQ1N30.dFnD7uIO_tD9yE-Gme2XH5CGBK9E4VnkB02gIp_OhMJAqhvlhsXXVeIpYghvRYTVGoq6torH_ThRyA65Fup9MKOLB63i9o-YILBWyBpPvundMmHdfhucKandVuIOwdDT-RgkbExdacekX5RnQVao245AoRjwnEQh-yvzPMZgnoDDmNQyIM9v7HFkK-YS9B8s8vy24wXFusyOT7MVt3Zm0Gr3joQBqugIAj66SfiDdsDqrEvfUc2C276cISOTOzzBBCBQ53l3-0EiA-BvF3oB48aKCvO6LyS0U_2-NwIM8KM_a3WkQCkqXYMs9SBNBTA5INBvqEjIAJvBCZjsY8Ea3w'
+
+export const testURL = 'https://pass.bamdev.space'
 export const testAlova = createAlova({
   baseURL: testURL,
   statesHook: vueHook,
@@ -18,3 +19,5 @@ export const testAlova = createAlova({
   },
   responded: (response) => response.json()
 })
+
+// export const authURL = 
