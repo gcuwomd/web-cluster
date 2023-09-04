@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+</script>
 
 <template>
   <div class="h-screen">
@@ -13,7 +15,6 @@
         <el-container>
           <el-main>
             <Main />
-            <index></index>
           </el-main>
           <el-footer>
             <Footer />
