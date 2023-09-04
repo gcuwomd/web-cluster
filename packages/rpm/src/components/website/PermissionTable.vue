@@ -16,7 +16,7 @@ const websiteGlobalApiList = ref<WebsiteApiInfo[]>()
 
 // 获取站点路由信息
 const { onSuccess: getPermissionsSuccess, send: update } = useRequest(
-  (type = 'all', page = 1, pageSize = 10, websiteId = route.params.id) =>
+  (_shouldForce: boolean, type = 'all', page = 1, pageSize = 10, websiteId = route.params.id) =>
     getPermissions(type, page, pageSize, websiteId),
   {
     force: (shouldForce: boolean) => shouldForce
