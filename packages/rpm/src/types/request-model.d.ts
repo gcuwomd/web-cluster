@@ -4,6 +4,7 @@ export interface NewWebsiteForm {
   websiteLogo: string
   belongs: string[]
 }
+<<<<<<< HEAD
 // -----------------------------------
 
 //定义 获取成员列表 的请求参数对象类型
@@ -38,3 +39,14 @@ export interface paramsRole{
 }
 
 
+=======
+export interface ChangeWebsiteInfForm extends NewWebsiteForm {
+  websiteId: string
+}
+export interface RouteForm {
+  websiteId: string
+  routeUrl: string
+  routeDescription: string
+  routeId?: string
+}
+>>>>>>> origin/feat-rpm

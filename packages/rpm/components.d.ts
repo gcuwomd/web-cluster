@@ -12,7 +12,11 @@ declare module 'vue' {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCascader: typeof import('element-plus/es')['ElCascader']
+<<<<<<< HEAD
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+=======
+    ElCol: typeof import('element-plus/es')['ElCol']
+>>>>>>> origin/feat-rpm
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDescriptions: typeof import('element-plus/es')['ElDescriptions']
     ElDescriptionsItem: typeof import('element-plus/es')['ElDescriptionsItem']
@@ -34,8 +38,14 @@ declare module 'vue' {
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
+<<<<<<< HEAD
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElSelect: typeof import('element-plus/es')['ElSelect']
+=======
+    ElRadio: typeof import('element-plus/es')['ElRadio']
+    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
+    ElRow: typeof import('element-plus/es')['ElRow']
+>>>>>>> origin/feat-rpm
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColmn: typeof import('element-plus/es')['ElTableColmn']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
@@ -45,11 +55,13 @@ declare module 'vue' {
     Footer: typeof import('./src/components/layout/Footer.vue')['default']
     Header: typeof import('./src/components/layout/Header.vue')['default']
     Main: typeof import('./src/components/layout/Main.vue')['default']
-    NewWebsiteDialog: typeof import('./src/components/dialogs/NewWebsiteDialog.vue')['default']
+    PermissionTable: typeof import('./src/components/website/PermissionTable.vue')['default']
+    RouteInfoDialog: typeof import('./src/components/dialogs/RouteInfoDialog.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sider: typeof import('./src/components/layout/Sider.vue')['default']
     Upload: typeof import('./src/components/Upload.vue')['default']
+    WebsiteInfoDialog: typeof import('./src/components/dialogs/WebsiteInfoDialog.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
