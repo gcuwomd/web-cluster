@@ -14,7 +14,7 @@
         <div class="i-charm:organisation text-2xl mr-2"></div>
         <span>组织架构</span>
       </el-menu-item>
-      <el-menu-item index="/role">
+      <el-menu-item index="/role/list">
         <div class="i-majesticons:scan-user-line text-2xl mr-2"></div>
         <span>角色管理</span>
       </el-menu-item>
