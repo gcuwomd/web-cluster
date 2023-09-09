@@ -1,6 +1,12 @@
 //分页获取角色列表  get
 import { testAlova } from '..'
-import { AccessibleWebsite, AlovaResponse, RoleInfo, RoleList, WebsiteOption } from '../../types/response-data-model'
+import {
+  AccessibleWebsite,
+  AlovaResponse,
+  RoleInfo,
+  RoleList,
+  WebsiteOption
+} from '../../types/response-data-model'
 export const getRoleList = (departmentId: string, pageSize: number, page: number) => {
   return testAlova.Get<AlovaResponse<RoleList>>('/auth/role/list', {
     params: {
