@@ -75,8 +75,8 @@ const Register = () => {
       // 使用 useRequest 会默认发起一次网络请求，通过设置 immediate:false 来关闭它
       immediate: false,
       middleware: async (_, next) => {
-        const { code, msg } = await next()
-        alovaErrorHandler(code, msg)
+        const { code, message } = await next()
+        alovaErrorHandler(code, message)
       }
     })
   const {
