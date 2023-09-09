@@ -1,20 +1,27 @@
 <script lang="ts" setup>
+<<<<<<< HEAD
 import { ref, reactive } from 'vue'
 import { rolelist } from '../../api/Role-manage/role-list'
 import { AddRole, DelRole } from '../../api/Role-manage/role-manage'
+=======
+import { ref, reactive, computed } from 'vue'
+import { getRoleList } from '../../api/methods/role'
+>>>>>>> 9d6f19e87c892524a239f0a96ff66d4f7f7cb94a
 import { useRequest } from 'alova'
+import type { DepartmentList, RoleListItem } from '../../types/response-data-model'
+import type { PaginationConfig } from '../../types/index'
+import { getDepartmentList } from '../../api/methods/organization'
 
-//角色卡片接口
-export interface RoleListItem {
-  roleId: string
-  roleName: string
-}
-//添加角色传参（表单）
-const addrolefrom = reactive({
-  roleName: '',
-  departmentId: ''
+const { onSuccess: getDepartmentListSuccess } = useRequest(() => getDepartmentList())
+const options = ref<DepartmentList[]>()
+getDepartmentListSuccess((response) => {
+  const {
+    data: { data }
+  } = response
+  options.value = data
 })
 
+<<<<<<< HEAD
 //清空表单数据
 const emptyadd = async () => {
   addrolefrom.roleName = ''
@@ -83,19 +90,60 @@ const handleCurrentChange = (val: number) => {
   console.log(`current page: ${val}`)
   currentPage.value = val
   updateRoleList(rolelist(departmentId.value, pageSize.value, currentPage.value))
+=======
+const { onSuccess, send: updateRoleList } = useRequest(
+  (
+    _shouldForce: boolean,
+    departmentId: string = '89904669e3354e83',
+    pageSize: number = 10,
+    page: number = 1
+  ) => getRoleList(departmentId, pageSize, page),
+  {
+    force: (shouldForce: boolean) => shouldForce
+  }
+)
+const roleList = ref<RoleListItem[]>()
+onSuccess((response) => {
+  const {
+    data: {
+      data: { row, total }
+    }
+  } = response
+  roleList.value = row
+  pagination.total = total
+})
+const pagination = reactive<PaginationConfig>({
+  pageSize: 20,
+  page: 1,
+  total: 0
+})
+const initPagination = () => {
+  Object.assign(pagination, { pageSize: 10, page: 1, total: 0 })
 }
+const selectedPath = ref<string[] | null>()
+const currentCondition = computed(() => {
+  if (selectedPath.value) {
+    const copyValue = [...selectedPath.value]
+    return copyValue.pop()
+  }
+  // 返回当前登录用户的部门id
+})
+const handlePathChange = () => {
+  initPagination()
+  updateRoleList(false, currentCondition.value)
+>>>>>>> 9d6f19e87c892524a239f0a96ff66d4f7f7cb94a
+}
+const isDialogOpen = ref<boolean>(false)
 </script>
 
 <template>
-  <!-- 头部导航 -->
   <section>
-    <div class="header">
-      <h3>角色管理</h3>
-      <div>
-        <el-button class="button" type="warning" @click="AddRoledialog = true">添加角色</el-button>
-      </div>
-    </div>
+    <el-breadcrumb>
+      <el-breadcrumb-item>权限管理系统</el-breadcrumb-item>
+      <el-breadcrumb-item>角色管理</el-breadcrumb-item>
+    </el-breadcrumb>
   </section>
+<<<<<<< HEAD
   <!-- 头部 -->
   <section>
     <el-row :gutter="40">
@@ -193,64 +241,63 @@ const handleCurrentChange = (val: number) => {
   <!-- 删除角色 -->
   <el-dialog v-model="deldialog" title="是否确认删除" width="30%">
     <el-button @click="deldialog = false">Cancel</el-button>
+=======
+  <section class="mt-4 flex gap-x-4">
+    <el-cascader
+      v-model="selectedPath"
+      :options="options"
+      class="w-80"
+      clearable
+      @change="handlePathChange"
+    />
+>>>>>>> 9d6f19e87c892524a239f0a96ff66d4f7f7cb94a
     <el-button
       type="primary"
       @click="
         () => {
+<<<<<<< HEAD
           updateDelRole(DelRole(delroleId)) //删除角色
           deldialog = false
+=======
+          isDialogOpen = true
+>>>>>>> 9d6f19e87c892524a239f0a96ff66d4f7f7cb94a
         }
       "
-      >Confirm</el-button
+      >添加角色</el-button
     >
-  </el-dialog>
+  </section>
+  <el-divider />
+  <section class="flex gap-4 flex-wrap mt-4">
+    <el-card
+      shadow="always"
+      class="cursor-pointer"
+      v-for="role in roleList"
+      :key="role.roleId"
+      @click="
+        () => {
+          $router.push({ name: 'roleDetail', params: { id: role.roleId } })
+        }
+      "
+    >
+      <h3>{{ role.roleName }}</h3>
+    </el-card>
+  </section>
+  <RoleInfoDialog
+    :open="isDialogOpen"
+    title="添加角色"
+    mode="add"
+    @complete="
+      () => {
+        initPagination()
+        updateRoleList(true, currentCondition)
+      }
+    "
+    @close="
+      () => {
+        isDialogOpen = false
+      }
+    "
+  />
 </template>
 
-<style scoped lang="scss">
-.header {
-  background-color: #ffffff;
-  width: 100%;
-  height: 80px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-  box-sizing: border-box;
-  padding: 25px;
-  font-size: large;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: space-between;
-}
-.cards {
-  margin-left: 30px;
-  font-size: 18px;
-  line-height: 25px;
-}
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-left: 30px;
-  font-size: 18px;
-}
-.card-body {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  font-size: 18px;
-}
-.custom-column1 {
-  &.cell, // 使用&符号代表父元素
-  &.custom-column2.cell {
-    font-size: 16px; /* 设置单元格文字大小 */
-  }
-
-  &.header,
-  &.custom-column2.header {
-    font-size: 18px; /* 设置表头文字大小 */
-  }
-}
-el-buttom {
-  font-size: 20px;
-}
-</style>
+<style scoped lang="scss"></style>

@@ -70,7 +70,7 @@ const provideFormData = () => {
     </el-card>
   </section>
   <section class="mt-4">
-    <PermissionTable />
+    <PermissionTable /> 
   </section>
   <WebsiteInfoDialog
     :open="openChangeInfoDialog"
