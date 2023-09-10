@@ -4,7 +4,7 @@ import { nopass } from '../../api/noPass'
 import { subNext } from '../../api/submitNext'
 import { ElTable, ElMessage } from 'element-plus'
 import { changepass } from '../../api/status'
-import { admin } from '../../api/admin'
+import { Picture as IconPicture } from '@element-plus/icons-vue'
 const tableData = ref<any[]>([])
 const total = ref(100)
 const table = ref<InstanceType<typeof ElTable>>()
@@ -19,25 +19,25 @@ onMounted(async () => {
   await nopassPerson()
 })
 
-const currentChange = (value: number) => {
-  console.log(value)
-}
 const handleCheck = async (rowid: string) => {
-  changepass(rowid, '1')
-  const { message }: any = await changepass(rowid, '1')
+  const { message } = (await changepass(rowid, '1')).data
   if (message === 'success') {
-    let data = (await admin()).data.data
-    tableData.value = data
-    total.value = data.length
-    ElMessage.success('修改成功！')
+    await nopassPerson()
+    ElMessage({
+      message: '修改成功!',
+      type: 'success',
+    })
   }
 }
+
 const submitnext = async (id: number) => {
-  console.log(id)
-  subNext(id)
-  const { message }: any = await subNext(id)
+  const { message }: any = (await subNext(id)).data
   if (message === 'success') {
-    alert('提交成功')
+    await nopassPerson()
+    ElMessage({
+      message: '修改成功!',
+      type: 'success',
+    })
   }
 }
 </script>
@@ -46,44 +46,19 @@ const submitnext = async (id: number) => {
     <el-button size="small" plain disabled>发送请求</el-button>
     <div style="margin-top: 10px">
       <el-table ref="table" :data="tableData" style="width: 100%">
-        <el-table-column type="selection" width="55"> </el-table-column>
-        <el-table-column label="Order" width="80">
+        <template v-slot:empty>
+          <el-empty description="No Data" />
+        </template>
+        <el-table-column fixed type="selection" width="80" />
+        <el-table-column fixed prop="username" label="Name" width="80" />
+        <el-table-column prop="id" label="Id" width="180" />
+        <el-table-column prop="phone" label="Phone" width="180" />
+        <el-table-column prop="college" label="College" width="180" />
+        <el-table-column prop="major" label="Major" width="150" />
+        <el-table-column prop="gender" label="Gender" width="180" />
+        <el-table-column prop="introduction" label="Introduction" width="180">
           <template #default="scope">
-            <span>{{ scope.$index + 1 }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="image" label="Image" align="center">
-          <template #default="scope">
-            <div v-for="(val, index) in scope.row.image" :key="index">
-              <div class="block text-center">
-                <el-carousel height="70px" :autoplay="false" indicator-position="outside">
-                  <el-carousel-item v-for="index in 4" :key="index">
-                    <el-image style="width: 70px; height: 70px" :src="val" alt=""></el-image>
-                  </el-carousel-item>
-                </el-carousel>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="college" label="College" />
-        <el-table-column prop="id" label="Id" />
-        <el-table-column label="Volunteer">
-          <template #default="scope">
-            <div v-for="(val, index) in scope.row.volunteer" :key="index">
-              <div>{{ val + '\n' }}</div>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="gender" label="Gender" width="80" />
-        <el-table-column prop="major" label="Major" />
-        <el-table-column prop="introduction" label="Introduction">
-          <template #default="scope">
-            <el-tooltip
-              :content="scope.row.introduction"
-              raw-content
-              placement="top-start"
-              v-if="scope.row.introduction"
-            >
+            <el-tooltip :content="scope.row.introduction" raw-content placement="top-start" v-if="scope.row.introduction">
               <span v-if="scope.row.introduction && scope.row.introduction.length <= 10">
                 {{ scope.row.introduction }}
               </span>
@@ -91,32 +66,47 @@ const submitnext = async (id: number) => {
                 {{ scope.row.introduction.substr(0, 10) + '...' }}
               </span>
             </el-tooltip>
-            <span v-else-if="scope.row.introduction == null"> NA </span>
+            <span v-else-if="scope.row.introduction === null"> Null </span>
           </template>
         </el-table-column>
-        <el-table-column prop="username" label="Name" width="80" />
-        <el-table-column label="button">
+        <el-table-column prop="image" label="Image" align="center" width="180">
+          <template #default="scope">
+            <div class="block text-center">
+              <el-carousel height="70px" :autoplay="false" indicator-position="outside">
+                <el-carousel-item v-for="(val, index) in scope.row.image" :key="index">
+                  <el-image style="width: 70px; height: 70px" :src="val" :zoom-rate="1.2" :preview-src-list="[val]"
+                    :initial-index="4" fit="cover" hide-on-click-modal="true" preview-teleported="true">
+                    <template #error>
+                      <div class="demo-image__error">
+                        <div class="block">
+                          <el-image>
+                            <template #error>
+                              <div class="image-slot">
+                                <el-icon><icon-picture /></el-icon>
+                              </div>
+                            </template>
+                          </el-image>
+                        </div>
+                      </div>
+                    </template>
+                  </el-image>
+                </el-carousel-item>
+              </el-carousel>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="Button" width="120">
           <template #default="scope">
             <el-button size="small" plain @click="handleCheck(scope.row.id)">通过</el-button>
           </template>
         </el-table-column>
-        <el-table-column label="operation">
+        <el-table-column label="Operation" width="120">
           <template #default="scope">
-            <el-button link type="primary" size="small" @click="submitnext(scope.row.id)"
-              >提交给下个部门</el-button
-            >
+            <el-button link type="primary" size="small" @click="submitnext(scope.row.id)">提交给下个部门</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <el-pagination
-      background
-      layout="prev,pager,next"
-      :total="total"
-      @current-change="currentChange"
-      class="pagination-center"
-    >
-    </el-pagination>
   </div>
 </template>
 <style scoped>
@@ -143,5 +133,34 @@ const submitnext = async (id: number) => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.demo-image__error .block {
+  text-align: center;
+  border-right: solid 1px var(--el-border-color);
+  display: inline-block;
+  width: 70px;
+  box-sizing: border-box;
+  vertical-align: top;
+}
+
+.demo-image__error .el-image {
+  width: 70px;
+  height: 70px;
+}
+
+.demo-image__error .image-slot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--el-fill-color-light);
+  color: var(--el-text-color-secondary);
+  font-size: 30px;
+}
+
+.demo-image__error .image-slot .el-icon {
+  font-size: 30px;
 }
 </style>

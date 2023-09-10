@@ -21,7 +21,6 @@ import { departmentData } from "../../api/statistics";
 
         try {
               arr = (await departmentData()).data.data.department;
-              console.log((await departmentData()).data.data.department);
               initChart();
             } 
         catch (error) {
@@ -29,7 +28,6 @@ import { departmentData } from "../../api/statistics";
 });
       const initChart = () => { 
       const data = arr;
-      console.log(data);
       const piePlot = new Pie(pie.value, {
     appendPadding: 10,
     data,

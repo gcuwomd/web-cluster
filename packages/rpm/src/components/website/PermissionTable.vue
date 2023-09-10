@@ -3,8 +3,8 @@ import { reactive, ref } from 'vue'
 import { useRequest } from 'alova'
 import { TableInstance } from 'element-plus'
 import { useRoute } from 'vue-router'
-import { getPermissions } from '../../api/methods/website'
-import { RouteForm } from '../../types/request-model'
+import { getPermissions, deleteWebsitePermission } from '../../api/methods/website'
+import { ApiForm, RouteForm } from '../../types/request-model'
 
 import { WebsiteRouteInfo, WebsiteApiInfo } from '../../types/response-data-model'
 
@@ -22,6 +22,9 @@ const { onSuccess: getPermissionsSuccess, send: update } = useRequest(
     force: (shouldForce: boolean) => shouldForce
   }
 )
+
+//删除站点路由
+const { send: deletePermission } = useRequest((type: string, id: string) => deleteWebsitePermission(type, id), { immediate: false })
 
 getPermissionsSuccess((response) => {
   const {
@@ -60,6 +63,26 @@ const openRouteDialog = (mode: string, data?: RouteForm) => {
   }
   isRouteDialogOpen.value = true
 }
+
+const apiDialogMode = ref<string>('')
+const isApiDialogOpen = ref<boolean>(false)
+const apiFormData = reactive<ApiForm>({
+  apiDescription: '',
+  apiMethod: '',
+  apiUrl: '',
+  apiType: 'pageApi',
+  routeId: '',
+  websiteId: route.params.id as string,
+})
+
+const openApiDialog = (mode: string, routeId:string,data?: ApiForm) => {
+  apiFormData['routeId']=routeId
+  apiDialogMode.value = mode
+  if (mode === 'change') {
+    Object.assign(apiFormData, data)
+  }
+  isApiDialogOpen.value = true
+}
 </script>
 <template>
   <el-card>
@@ -70,6 +93,7 @@ const openRouteDialog = (mode: string, data?: RouteForm) => {
       </div>
     </template>
 
+<<<<<<< HEAD
     <el-table
       ref="tableRef"
       :data="websiteRouteList"
@@ -96,25 +120,36 @@ const openRouteDialog = (mode: string, data?: RouteForm) => {
         }
       "
     >
+=======
+    <el-table ref="tableRef" :data="websiteRouteList" highlight-current-row :row-key="(row: WebsiteRouteInfo) => {
+      return row.routeId
+    }
+      " :expand-row-keys="currentExpandedRow" @expand-change="(row: WebsiteRouteInfo) => {
+    currentExpandedRow = [row.routeId]
+  }
+    " @cell-click="(row: WebsiteRouteInfo) => {
+    const [currentRow] = currentExpandedRow
+    currentExpandedRow.length === 1
+      ? currentRow === row.routeId
+        ? (currentExpandedRow = [])
+        : (currentExpandedRow = [row.routeId])
+      : (currentExpandedRow = [row.routeId])
+  }
+    ">
+>>>>>>> dab0b34b9a9510f895ccad50ab4183d17b9ed33d
       <el-table-column type="expand">
         <template #default="props">
           <section class="my-4">
             <div class="w-full flex justify-between items-center mb-4">
               <h4>视图接口列表</h4>
               <div class="flex gap-x-4">
-                <el-button type="primary">添加视图接口</el-button>
-                <el-button
-                  type="danger"
-                  @click="
-                    () => {
-                      console.log(tableRef)
-                    }
-                  "
-                  >删除所选视图接口</el-button
-                >
+                <el-button type="primary" @click="openApiDialog('add',props.row.routeId)">添加视图接口</el-button>
+                <el-button type="danger" @click="() => {
+                  console.log(tableRef)
+                }
+                  ">删除所选视图接口</el-button>
               </div>
             </div>
-
             <el-table :data="props.row.pageApi" border>
               <el-table-column type="selection" width="55" />
               <el-table-column label="接口路径" prop="apiUrl" />
@@ -125,7 +160,7 @@ const openRouteDialog = (mode: string, data?: RouteForm) => {
                 </template>
               </el-table-column>
               <el-table-column label="操作">
-                <template #default="scoped">
+                <template #default="">
                   <el-button link type="primary">修改接口信息</el-button>
                   <el-button link type="danger">删除接口</el-button>
                 </template>
@@ -140,23 +175,22 @@ const openRouteDialog = (mode: string, data?: RouteForm) => {
       <el-table-column label="操作">
         <template #default="scoped">
           <el-button link type="primary">修改视图信息</el-button>
-          <el-button link type="danger">删除视图</el-button>
+          <el-button link type="danger" @click="deletePermission('route', scoped.row.routeId)" @complete="() => {
+            update(true)
+          }">删除视图</el-button>
         </template>
       </el-table-column>
     </el-table>
   </el-card>
-  <RouteInfoDialog
-    :open="isRouteDialogOpen"
-    :id="route.params.id"
-    title="添加站点视图"
-    :mode="routeDialogMode"
-    :formData="routeFormData"
-    @close="isRouteDialogOpen = false"
-    @complete="
-      () => {
-        update(true)
-      }
-    "
-  />
+  <RouteInfoDialog :open="isRouteDialogOpen" :id="route.params.id" title="添加站点视图" :mode="routeDialogMode"
+    :formData="routeFormData" @close="isRouteDialogOpen = false" @complete="() => {
+      update(true)
+    }
+      " />
+  <ApiInfoDialog :open="isApiDialogOpen" :id="route.params.id" title="添加视图接口" :mode="apiDialogMode"
+    :formData="apiFormData" @close="isApiDialogOpen = false" @complete="() => {
+      update(true)
+    }
+      " />
 </template>
 <style scoped lang="scss"></style>

@@ -1,10 +1,15 @@
+import { readonly } from "vue"
+
 export interface NewWebsiteForm {
   websiteName: string
   websiteUrl: string
   websiteLogo: string
   belongs: string[]
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dab0b34b9a9510f895ccad50ab4183d17b9ed33d
 // -----------------------------------
 
 //定义 获取成员列表 的请求参数对象类型
@@ -52,9 +57,28 @@ export interface RoleForm {
   readonly departmentId: string
 }
 
+<<<<<<< HEAD
 //分配角色权限
 export interface permissions {
   websiteId: string
   type: string
   websitePermissions: string[]
 }
+=======
+//定义 添加api 的请求参数的对象类型
+export interface ApiForm{
+  readonly websiteId: string;
+  routeId: string | null;
+  apiDescription: string;
+  apiMethod: string;
+  apiUrl: string;
+  apiType: string;// 取值: 页面接口 或 全局接口
+}
+ //定义 删除站点权限路由 的请求参数的对象类型
+export interface DeleteRouteForm{
+      //权限路由id
+      id: string;
+      //取值：api，route
+      type: string;
+}
+>>>>>>> dab0b34b9a9510f895ccad50ab4183d17b9ed33d

@@ -7,10 +7,16 @@ export function setInterceptors(axios: AxiosInstance) {
     // 添加请求拦截器
     axios.interceptors.request.use(
         function (config) {
-            // 在发送请求之前做些什么
-            config.headers.Authorization= `Bearer ${store.access_token}`
-            
-            return config;
+            if(store.access_token)
+            {
+                // 在发送请求之前做些什么
+                config.headers.Authorization= `Bearer ${store.access_token}`
+                
+                return config;
+            }
+            else{
+                return Promise.reject("没有token");
+            }
         },
 
         function (error) {

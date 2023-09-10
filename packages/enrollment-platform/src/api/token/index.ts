@@ -12,10 +12,8 @@ export const getAccessToken = () => {
     formData.append('grant_type', 'refresh_token')
     if (refresh_token) formData.append('refresh_token', refresh_token)
     else if (refresh_tokens.value) formData.append('refresh_token', refresh_tokens.value)
-    console.log(refresh_token)
-    console.log(refresh_tokens.value)
 
-    fetch(`http://43.139.117.216:9821/oauth2/token`, {
+    fetch(`https://www.bamdev.space:9821/oauth2/token`, {
       method: 'POST',
       body: formData,
       headers: {
@@ -27,14 +25,13 @@ export const getAccessToken = () => {
       .then((data) => {
         if (data.error) {
           refresh_tokens.value = null
-          window.location.href = 'http://43.139.117.216:6432'
+          window.location.href = 'https://nav.bamdev.space'
         }
         refresh_tokens.value = data.refresh_token
-        store.access_token = data.access_token
-
+        store.access_token = data.access_token        
         getUserInfo()
       })
   } else {
-    window.location.href = 'http://43.139.117.216:6432'
+    window.location.href = 'https://nav.bamdev.space'
   }
 }
