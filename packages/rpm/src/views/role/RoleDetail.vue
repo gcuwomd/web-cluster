@@ -11,7 +11,6 @@ const { data: roleInfo } = useRequest(
     initialData: {}
   }
 )
-
 </script>
 <template>
   <section>
@@ -58,6 +57,7 @@ const { data: roleInfo } = useRequest(
         <template #title>
           <h3 class="text-xl">角色权限列表</h3>
         </template>
+        <role-permission-list />
       </el-collapse-item>
     </el-collapse>
   </section>

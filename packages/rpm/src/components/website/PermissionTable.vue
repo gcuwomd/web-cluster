@@ -75,26 +75,26 @@ const openRouteDialog = (mode: string, data?: RouteForm) => {
       :data="websiteRouteList"
       highlight-current-row
       :row-key="
-          (row:WebsiteRouteInfo) => {
-            return row.routeId
-          }
-        "
+        (row: WebsiteRouteInfo) => {
+          return row.routeId
+        }
+      "
       :expand-row-keys="currentExpandedRow"
       @expand-change="
-          (row:WebsiteRouteInfo) => {
-            currentExpandedRow = [row.routeId]
-          }
-        "
+        (row: WebsiteRouteInfo) => {
+          currentExpandedRow = [row.routeId]
+        }
+      "
       @cell-click="
-          (row:WebsiteRouteInfo) => {
-            const [currentRow] = currentExpandedRow
-            currentExpandedRow.length === 1
-              ? currentRow === row.routeId
-                ? (currentExpandedRow = [])
-                : (currentExpandedRow = [row.routeId])
+        (row: WebsiteRouteInfo) => {
+          const [currentRow] = currentExpandedRow
+          currentExpandedRow.length === 1
+            ? currentRow === row.routeId
+              ? (currentExpandedRow = [])
               : (currentExpandedRow = [row.routeId])
-          }
-        "
+            : (currentExpandedRow = [row.routeId])
+        }
+      "
     >
       <el-table-column type="expand">
         <template #default="props">

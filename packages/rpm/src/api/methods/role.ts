@@ -5,8 +5,11 @@ import {
   AlovaResponse,
   RoleInfo,
   RoleList,
-  WebsiteOption
+  WebsiteOption,
+  getRolePermission
 } from '../../types/response-data-model'
+import { permissions } from '../../types/request-model'
+//分页获取角色列表
 export const getRoleList = (departmentId: string, pageSize: number, page: number) => {
   return testAlova.Get<AlovaResponse<RoleList>>('/auth/role/list', {
     params: {
@@ -30,7 +33,7 @@ export const deleteRole = (roleId: string) => {
     shareRequest: false
   })
 }
-
+//角色信息
 export const getRole = (roleId: string) => {
   return testAlova.Get<RoleInfo>(`/auth/role/detail`, {
     params: { roleId },
@@ -39,7 +42,7 @@ export const getRole = (roleId: string) => {
     }
   })
 }
-
+//全站点列表
 export const getAllWebsite = () => {
   return testAlova.Get<WebsiteOption[]>(`/auth/role/website/list`, {
     transformData(data, _headers) {
@@ -47,7 +50,7 @@ export const getAllWebsite = () => {
     }
   })
 }
-
+//获取角色的可访问站点信息
 export const getAccessibleWebsite = (roleId: string) => {
   return testAlova.Get<AccessibleWebsite[]>('/auth/role/websiteInfo', {
     params: {
@@ -57,4 +60,35 @@ export const getAccessibleWebsite = (roleId: string) => {
       return (data as AlovaResponse<AccessibleWebsite[]>).data
     }
   })
+}
+//分配角色权限
+export const AddrolePermission = (id: string, permission: permissions[]) => {
+  return testAlova.Post<AlovaResponse<null>>('/auth/role/permission', {
+    roleId: id,
+    permissions: permission
+  })
+}
+//删除角色权限
+export const DelrolePermission = (id: string, route: string[] | null, api: string[] | null) => {
+  return testAlova.Put<AlovaResponse<null>>('/auth/role/permission', {
+    roldId: id,
+    route: route,
+    api: api
+  })
+}
+//获取对应角色权限信息
+export const GetRolePermission = (roleId: string) => {
+  return testAlova.Get<AlovaResponse<getRolePermission>>('/auth/role/permission', {
+    params: {
+      roleId
+    }
+  })
+}
+//添加角色可访问吧站点
+export const AddroleWebsite = (list: string[], roleId: string) => {
+  return testAlova.Post<AlovaResponse<null>>('/auth/role/website', { list: list, roleId: roleId })
+}
+//删除角色可访问站点
+export const DelroleWebsite = (list: string[], roleId: string) => {
+  return testAlova.Delete<AlovaResponse<null>>(`/auth/role/website?list=${list}&roleId=${roleId}`)
 }
