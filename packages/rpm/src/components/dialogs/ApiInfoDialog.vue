@@ -9,7 +9,7 @@ interface DialogProps {
     open: boolean
     title: string
     mode: 'add' | 'change'
-    formData?: ApiForm
+    formData: ApiForm
 }
 
 const props = defineProps<DialogProps>()
@@ -54,7 +54,8 @@ const rules = reactive<FormRules<ApiForm>>({
     apiDescription: [
         { required: true, message: '请输入接口描述', trigger: 'blur' },
         { max: 60, message: '视图描述过长', trigger: 'blur' }
-    ]
+    ],
+    apiMethod: [{ required: true, message: '请选择接口类型', trigger: 'blur' }],
 })
 
 const submitForm = () => {

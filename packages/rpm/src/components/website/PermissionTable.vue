@@ -70,13 +70,13 @@ const apiFormData = reactive<ApiForm>({
   apiDescription: '',
   apiMethod: '',
   apiUrl: '',
-  apiType: 'pageApi',
+  apiType: '',
   routeId: '',
   websiteId: route.params.id as string,
 })
 
-const openApiDialog = (mode: string, routeId:string,data?: ApiForm) => {
-  apiFormData['routeId']=routeId
+const openApiDialog = (mode: string, routeId: string, data?: ApiForm) => {
+  apiFormData['routeId'] = routeId
   apiDialogMode.value = mode
   if (mode === 'change') {
     Object.assign(apiFormData, data)
@@ -93,34 +93,6 @@ const openApiDialog = (mode: string, routeId:string,data?: ApiForm) => {
       </div>
     </template>
 
-<<<<<<< HEAD
-    <el-table
-      ref="tableRef"
-      :data="websiteRouteList"
-      highlight-current-row
-      :row-key="
-        (row: WebsiteRouteInfo) => {
-          return row.routeId
-        }
-      "
-      :expand-row-keys="currentExpandedRow"
-      @expand-change="
-        (row: WebsiteRouteInfo) => {
-          currentExpandedRow = [row.routeId]
-        }
-      "
-      @cell-click="
-        (row: WebsiteRouteInfo) => {
-          const [currentRow] = currentExpandedRow
-          currentExpandedRow.length === 1
-            ? currentRow === row.routeId
-              ? (currentExpandedRow = [])
-              : (currentExpandedRow = [row.routeId])
-            : (currentExpandedRow = [row.routeId])
-        }
-      "
-    >
-=======
     <el-table ref="tableRef" :data="websiteRouteList" highlight-current-row :row-key="(row: WebsiteRouteInfo) => {
       return row.routeId
     }
@@ -136,14 +108,13 @@ const openApiDialog = (mode: string, routeId:string,data?: ApiForm) => {
       : (currentExpandedRow = [row.routeId])
   }
     ">
->>>>>>> dab0b34b9a9510f895ccad50ab4183d17b9ed33d
       <el-table-column type="expand">
         <template #default="props">
           <section class="my-4">
             <div class="w-full flex justify-between items-center mb-4">
               <h4>视图接口列表</h4>
               <div class="flex gap-x-4">
-                <el-button type="primary" @click="openApiDialog('add',props.row.routeId)">添加视图接口</el-button>
+                <el-button type="primary" @click="openApiDialog('add', props.row.routeId)">添加视图接口</el-button>
                 <el-button type="danger" @click="() => {
                   console.log(tableRef)
                 }
@@ -160,9 +131,9 @@ const openApiDialog = (mode: string, routeId:string,data?: ApiForm) => {
                 </template>
               </el-table-column>
               <el-table-column label="操作">
-                <template #default="">
+                <template #default="scoped">
                   <el-button link type="primary">修改接口信息</el-button>
-                  <el-button link type="danger">删除接口</el-button>
+                  <el-button link type="danger" @click="deletePermission('api', scoped.row.routeId)">删除接口</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -177,7 +148,8 @@ const openApiDialog = (mode: string, routeId:string,data?: ApiForm) => {
           <el-button link type="primary">修改视图信息</el-button>
           <el-button link type="danger" @click="deletePermission('route', scoped.row.routeId)" @complete="() => {
             update(true)
-          }">删除视图</el-button>
+          }
+            ">删除视图</el-button>
         </template>
       </el-table-column>
     </el-table>

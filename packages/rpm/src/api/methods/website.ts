@@ -1,5 +1,5 @@
 import { testAlova } from '..'
-import { ChangeWebsiteInfForm, NewWebsiteForm, RouteForm, ApiForm,DeleteRouteForm } from '../../types/request-model'
+import { ChangeWebsiteInfForm, NewWebsiteForm, RouteForm, ApiForm } from '../../types/request-model'
 import {
   AlovaResponse,
   WebsiteBaseInfo,
@@ -54,7 +54,7 @@ export const addRoute = (form: RouteForm) => {
 }
 
 export const deleteWebsitePermission = (type: string, id: string) => {
-  return testAlova.Delete<AlovaResponse<DeleteRouteForm>>(`/auth/website/permission?type=${type}&id=${id}`,
+  return testAlova.Delete<AlovaResponse<null>>(`/auth/website/permission?type=${type}&id=${id}`,
     {
       shareRequest: false
     })
