@@ -5,6 +5,11 @@ import { Loadlist } from '../api/loadlist'
 import { search } from '../api/search'
 import { Search } from '@element-plus/icons-vue'
 import { Picture as IconPicture } from '@element-plus/icons-vue'
+import { UploadFilled } from '@element-plus/icons-vue'
+import { useStore } from '../store'
+import { ElMessage } from 'element-plus'
+const store = useStore()
+store.access_token
 const tableData = ref<any[]>([])
 const total = ref()
 let currentPage = ref()
@@ -51,6 +56,56 @@ const loadlist = async () => {
   window.URL.revokeObjectURL(a.href)
   document.body.removeChild(a)
 }
+//上传表格的对话框
+const dialogVisible = ref(false)
+//excel 文件上传成功
+/* const handleUploadSuccess = async () => {
+  dialogVisible.value = false
+  ElMessage({
+    message: '上传成功!',
+    type: 'success'
+  })
+  loading.value = false
+} */
+const handleUploading = async () => {
+  loading.value = true
+}
+//上传excel文件
+const uploadFile = async (param: any) => {
+  var file = param.file
+  //发送请求的参数格式为FormData
+  const formData = new FormData()
+  formData.append('file', file)
+  fetch('https://pass.bamdev.space/upload', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      Authorization: `Bearer ${store.access_token}`
+    }
+  })
+    .then((response) => {
+      return response.json()
+    })
+    .then((response) => {
+      // 处理上传成功后的响应
+      console.log('上传成功')
+      ElMessage({
+        message: '上传成功!',
+        type: 'success'
+      })
+      dialogVisible.value = false
+      loading.value = false
+      const data = response.body.code
+      console.log(data)
+    })
+    .catch((error) => {
+      // 处理上传错误
+      console.error('上传失败', error)
+    })
+}
+
+//上传文件时 加载
+const loading = ref(false)
 </script>
 <template>
   <div class="container">
@@ -60,6 +115,9 @@ const loadlist = async () => {
       </div>
       <div style="padding-left: 10px">
         <el-button @click="load(currentPage)" type="primary">刷新表格</el-button>
+      </div>
+      <div style="padding-left: 10px">
+        <el-button @click="dialogVisible = true" type="primary">上传表格</el-button>
       </div>
       <div style="padding-left: 20px">
         <el-input v-model="searchkey" :rows="2" type="text" placeholder="请输入关键词" />
@@ -156,6 +214,24 @@ const loadlist = async () => {
       v-model:current-page="currentPage"
     ></el-pagination>
   </div>
+  <el-dialog v-model="dialogVisible" title="上传excel表格" width="30%" class="dialog-rounded">
+    <el-upload
+      class="upload-demo"
+      drag
+      action="https://pass.bamdev.space/upload"
+      :http-request="uploadFile"
+      accept=".xlsx,.xls"
+      :on-progress="handleUploading"
+      v-loading="loading"
+      element-loading-text="Loading..."
+    >
+      <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+      <div class="el-upload__text">
+        请注意，
+        <span style="color: red">该功能会影响总表格</span>
+      </div>
+    </el-upload>
+  </el-dialog>
 </template>
 <style scoped>
 .container {
@@ -216,5 +292,8 @@ const loadlist = async () => {
 
 .demo-image__error .image-slot .el-icon {
   font-size: 30px;
+}
+.dialog-rounded {
+  border-radius: 5px;
 }
 </style>
