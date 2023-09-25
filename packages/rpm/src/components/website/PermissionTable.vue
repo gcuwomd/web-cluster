@@ -146,10 +146,8 @@ const openApiDialog = (mode: string, routeId: string, data?: ApiForm) => {
       <el-table-column label="操作">
         <template #default="scoped">
           <el-button link type="primary">修改视图信息</el-button>
-          <el-button link type="danger" @click="deletePermission('route', scoped.row.routeId)" @complete="() => {
-            update(true)
-          }
-            ">删除视图</el-button>
+          <el-button link type="danger" @click="deletePermission('route', scoped.row.routeId)" 
+            >删除视图</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { pass } from '../../api/pass'
-import { ElTable, ElMessage } from 'element-plus'
+import { ElTable, ElMessage as elmessage } from 'element-plus'
 import { changepass } from '../../api/status'
 import { Picture as IconPicture } from '@element-plus/icons-vue'
 const tableData = ref<any[]>([])
@@ -36,10 +36,7 @@ const handleCheck = async (rowid: string) => {
   const { message } = (await changepass(rowid, '-1')).data
   if (message === 'success') {
     await passPerson()
-    ElMessage({
-      message: '修改成功!',
-      type: 'success',
-    })
+    elmessage.success('修改成功')
   }
 }
 

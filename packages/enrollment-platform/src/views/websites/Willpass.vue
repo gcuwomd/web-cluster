@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { willpass } from "../../api/willPass"
-import { ElTable, ElMessage } from 'element-plus'
+import { getassess } from "../../api/getAssess"
+import { ElTable, ElMessage as elmessage } from 'element-plus'
 import { changepass } from "../../api/status"
 import { Picture as IconPicture } from '@element-plus/icons-vue'
 const tableData = ref<any[]>([]);
@@ -18,21 +19,22 @@ const handleSuccess = async (rowid: string) => {
     const { message } = (await changepass(rowid, "1")).data
     if (message === "success") {
         await willpassPerson()
-        ElMessage({
-            message: '修改成功!',
-            type: 'success',
-        })
+        elmessage.success('修改成功')
     }
 }
 const handleError = async (rowid: string) => {
     const { message } = (await changepass(rowid, "-1")).data
     if (message === "success") {
         await willpassPerson()
-        ElMessage({
-            message: '修改成功!',
-            type: 'success',
-        })
+        elmessage.success('修改成功')
     }
+}
+const dialogVisible = ref(false)
+const dataList = ref()
+const getassessMsg = async (id: string) => {
+    const { data } = (await getassess(id)).data
+    dataList.value = data
+    dialogVisible.value = true
 }
 </script>
 <template>
@@ -97,10 +99,21 @@ const handleError = async (rowid: string) => {
                         <el-button size="small" plain @click="handleError(scope.row.id)">未通过</el-button>
                     </template>
                 </el-table-column>
-
+                <el-table-column label="Operation" width="180">
+                    <template #default="scope">
+                        <el-button size="small" plain @click="getassessMsg(scope.row.id)">查看评价信息</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
         </div>
     </div>
+    <el-dialog v-model="dialogVisible" title="评价信息">
+        <div class="assessMsg">
+            <ul>
+                <li v-for="(item,index) in dataList">第{{ index+1 }}条评价: {{item.comment }}</li>
+            </ul>
+        </div>
+    </el-dialog>
 </template>
 <style scoped>
 .container {
@@ -155,5 +168,19 @@ const handleError = async (rowid: string) => {
 
 .demo-image__error .image-slot .el-icon {
     font-size: 30px;
+}
+.assessMsg{
+    padding: 10px;
+}
+ul {
+    list-style-type: none;
+    border: 2px solid;
+    box-shadow: 0 0 0 10px white;
+    border-radius: 10px;
+}
+li{
+    font-family: Arial;
+    font-size: 16px;
+    margin: 5px;
 }
 </style>

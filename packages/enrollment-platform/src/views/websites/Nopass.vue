@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { nopass } from '../../api/noPass'
-import { subNext } from '../../api/submitNext'
-import { ElTable, ElMessage } from 'element-plus'
+import { ElTable, ElMessage as elmessage } from 'element-plus'
 import { changepass } from '../../api/status'
 import { Picture as IconPicture } from '@element-plus/icons-vue'
+import AssessDialog from '../dialogs/AssessDialog.vue'
 const tableData = ref<any[]>([])
 const total = ref(100)
 const table = ref<InstanceType<typeof ElTable>>()
+const isAssessDialogOpen=ref<boolean>(false)
 //未通过人员信息
 const nopassPerson = async () => {
   let data = (await nopass()).data.data
@@ -23,23 +24,18 @@ const handleCheck = async (rowid: string) => {
   const { message } = (await changepass(rowid, '1')).data
   if (message === 'success') {
     await nopassPerson()
-    ElMessage({
-      message: '修改成功!',
-      type: 'success',
-    })
+    elmessage.success('修改成功')
   }
 }
 
-const submitnext = async (id: number) => {
-  const { message }: any = (await subNext(id)).data
-  if (message === 'success') {
-    await nopassPerson()
-    ElMessage({
-      message: '修改成功!',
-      type: 'success',
-    })
-  }
+const assessId =ref<string>('')
+
+const openAssessDialog = (id:string)=>{
+  isAssessDialogOpen.value=true
+  assessId.value=id
 }
+
+
 </script>
 <template>
   <div class="container">
@@ -102,13 +98,14 @@ const submitnext = async (id: number) => {
         </el-table-column>
         <el-table-column label="Operation" width="120">
           <template #default="scope">
-            <el-button link type="primary" size="small" @click="submitnext(scope.row.id)">提交给下个部门</el-button>
+            <el-button link type="primary" size="small" @click="openAssessDialog(scope.row.id)">提交给下个部门</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
   </div>
-</template>
+  <AssessDialog :id="assessId" :open="isAssessDialogOpen" title="评价信息" @close="isAssessDialogOpen = false" @complete="nopassPerson"/>
+  </template>
 <style scoped>
 .container {
   width: 100%;

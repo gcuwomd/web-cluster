@@ -73,7 +73,7 @@ const submitForm = () => {
     :title="props.title"
     :show-close="false"
     width="512"
-    class="!rounded-lg"
+    class="!rounded-lg" 
     @open="handleOpen"
     @close="closeDialog"
   >
